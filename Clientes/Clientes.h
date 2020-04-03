@@ -6,8 +6,10 @@ typedef struct{
 	char *apellido;
 	char *direccion;
 	int tlf;
-	int n_ct;
-	char *emial;
+	int n_cta;
+	char *email;
 }Clientes;
 void reguistrarCliente(Clientes nuevo_cli);
+void crearTablaClientes();
+void void eliminacionCliente(Clientes newCli);
 #endif
