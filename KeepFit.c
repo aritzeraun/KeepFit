@@ -20,6 +20,8 @@ int main(void){
 			printf("%s\n","Introduzca el DNI:" );
 			printf("%s\n", "Introduzca el NOMBRE:");
 			printf("%s\n","Introduzca el APELLIDO:");
+			Clientes a;
+			reguistrarCliente(a);
 			break;
 			case 2:
 			break;
