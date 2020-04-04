@@ -6,10 +6,14 @@ typedef struct{
 	char *apellido;
 	char *direccion;
 	int tlf;
-	int n_cta;
+	char *n_cta;
 	char *email;
 }Clientes;
+
 void reguistrarCliente(Clientes nuevo_cli);
 void crearTablaClientes();
-void void eliminacionCliente(Clientes newCli);
+void eliminacionCliente(Clientes newCli);
+Clientes* seleccionClientes(Clientes arrayLectura[5]);
+int charToNumber(char *cadena);
+int larguraStatment();
 #endif
