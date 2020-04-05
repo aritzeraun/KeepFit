@@ -1,19 +1,21 @@
 #include <stdio.h>
 #include <string.h>
+#include "Utilidades.h"
 
 int comprobacionDNI(char *DNI){
 	int contador=0;
 	int ascii =0;
+
 	if(strlen(DNI)==9){
 		for(int i = 0;i<9;i++){
 			ascii= DNI[i];
 
 			if(i<8){
-				if(ascii>=48 && asci<58){
+				if(ascii>=48 && ascii<58){
 					contador++;
 				}
 			}else{
-				if(ascii>48 || ascii>57){
+				if(ascii<48 || ascii>57){
 					contador++;
 				}
 			}
@@ -30,12 +32,12 @@ int comprobacionDNI(char *DNI){
 		return 1;
 	}
 }
-int comprobacionTLF(int *TLF){
-	if(TLF<=999999999 && TFL>=100000000){ //los telefonos tienen 9 zifras numericas
-		if(TFL>=600000000 && TLF<800000000){
+int comprobacionTLF(int TLF){
+	if(TLF<=999999999 && TLF>=100000000){ //los telefonos tienen 9 zifras numericas
+		if(TLF>=600000000 && TLF<800000000){
 			// Hoy en dia los telefonos moviles pueden empezar de 6 o 7.
 			return 0;
-		}else if(TLF<=999999999 && TFL>=900000000){
+		}else if(TLF<=999999999 && TLF>=900000000){
 			// Todos los telefonos fijos empiezan con el numero 9 en españa.
 			return 0;
 		}else{
@@ -48,14 +50,14 @@ int comprobacionTLF(int *TLF){
 	}
 }
 int comprobacionIBAN(char* IBAN){
-	short int =0;
+	short int tipo= 0;
 	short int contador = 0;
 	int ascii = 0;
 	if(strlen(IBAN)==20  || strlen(IBAN)==24){
 		if(strlen(IBAN)==24){
 			tipo =2;
-			if(strlen(IBAN[0]=='E')){
-				if(strlen(IBAN[0])=='S'){
+			if(IBAN[0]=='E'){
+				if(IBAN[0]=='S'){
 					contador++;
 				}else{
 					printf("%s\n","El formato del IBAN no es el adecuado." );
@@ -66,7 +68,7 @@ int comprobacionIBAN(char* IBAN){
 		}
 		for(int i = 0; i<(20+tipo); i++){
 			ascii= IBAN[i+tipo];
-			if(ascii>=48 && asci<58){
+			if(ascii>=48 && ascii<58){
 					contador++;
 				}
 		}
