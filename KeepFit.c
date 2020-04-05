@@ -33,8 +33,7 @@ int main(void){
 			length= larguraStatment();
 			lecturaCli= (Clientes*)malloc(length*sizeof(Clientes));
 			(lecturaCli)=seleccionClientes(lecturaCli);
-			printf("%s\n", (lecturaCli+0)->DNI);
-			printf("%s\n", (lecturaCli+1)->DNI);
+			
 			free(lecturaCli);
 
 			break;

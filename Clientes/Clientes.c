@@ -66,40 +66,33 @@ int charToNumber(char * cadena){
    for(int i=0;i<strlen(cadena);i++){
       number = number *10 + cadena[i]-48;
    }
+   return number;
 }
 
 Clientes* seleccionClientes(Clientes arrayLectura[]){
       sqlite3 *db = conexion();
-      sqlite3_stmt *stmt;
-      int i =0;
-      char *mensageError;
-      char *DNI;
-      char *nombre;
-      char *apellido;
-      char *direccion;
       char *tlf;
-      char *n_cta;
-      char *email;    
-    sqlite3_prepare_v2(db,"SELECT * FROM Clientes;", -1, &stmt, NULL);
+      sqlite3_stmt *stmt;
+      int i =0;  
+      sqlite3_prepare_v2(db,"SELECT * FROM Clientes;", -1, &stmt, NULL);
+
       while (sqlite3_step(stmt) != SQLITE_DONE) {
-         char * DNIe;
-         DNI =(char*) sqlite3_column_text(stmt, 0);
-         strcpy(DNIe,DNI);
-         (arrayLectura+i)->DNI = DNIe;
-         nombre =(char*) sqlite3_column_text(stmt, 1);
-         arrayLectura[i].nombre = nombre;
-         apellido = (char*)sqlite3_column_text(stmt, 2);
-         arrayLectura[i].apellido = apellido;
-         direccion = (char*)sqlite3_column_text(stmt, 3);
-         arrayLectura[i].direccion = direccion;
-         tlf = (char*)sqlite3_column_text(stmt, 4);
-         arrayLectura[i].tlf = charToNumber(tlf);
-         n_cta = (char*) sqlite3_column_text(stmt, 5);
-         arrayLectura[i].n_cta = n_cta;
-         email = (char*) sqlite3_column_text(stmt, 6);
-         arrayLectura[i].email= email;
+         arrayLectura[i].DNI =(char*)malloc(strlen((char*) sqlite3_column_text(stmt, 0))*sizeof(char));
+         strcpy((arrayLectura[i]).DNI,(char*) sqlite3_column_text(stmt, 0));
+         arrayLectura[i].nombre =(char*)malloc(strlen((char*) sqlite3_column_text(stmt, 1))*sizeof(char));
+         strcpy((arrayLectura[i]).nombre,(char*) sqlite3_column_text(stmt, 1));
+         arrayLectura[i].apellido =(char*)malloc(strlen((char*) sqlite3_column_text(stmt,2))*sizeof(char));
+         strcpy((arrayLectura[i]).apellido,(char*) sqlite3_column_text(stmt, 2));
+         arrayLectura[i].direccion =(char*)malloc(strlen((char*) sqlite3_column_text(stmt, 3))*sizeof(char));
+         strcpy((arrayLectura[i]).direccion,(char*) sqlite3_column_text(stmt, 3));
+         tlf= (char *) sqlite3_column_text(stmt, 4);
+         arrayLectura[i].tlf =(int) malloc(1*sizeof(int));
+          arrayLectura[i].tlf = charToNumber(tlf);
+         arrayLectura[i].n_cta =(char*)malloc(strlen((char*) sqlite3_column_text(stmt, 5))*sizeof(char));
+         strcpy((arrayLectura[i]).n_cta,(char*) sqlite3_column_text(stmt, 5));
+          arrayLectura[i].email =(char*)malloc(strlen((char*) sqlite3_column_text(stmt, 6))*sizeof(char));
+         strcpy((arrayLectura[i]).email,(char*) sqlite3_column_text(stmt, 6));
          i++;
-   
       }
       sqlite3_close(db);
         return arrayLectura;
