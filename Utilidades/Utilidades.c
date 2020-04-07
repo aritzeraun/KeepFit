@@ -82,3 +82,43 @@ int comprobacionIBAN(char* IBAN){
 		printf("%s\n","El IBAN introducido tiene una logitud indeseada. Recuerda que el IBAN puede tener 20 o 24 caracteres." );
 	}
 }
+// comprueba que la cadena no tenga caracteres 'raros' y pone en mayusculas el primer caracter de cada palabra
+int ponerMayusculas(char * cadena){
+	int mayuscula = 0;
+	int contador = 0;
+
+	if(strlen(cadena)>3){
+		if((cadena[0]>=65 && cadena<=90)||(cadena[0]>=97 && cadena<=122)){
+			contador++;
+			for(int i =1;i<strlen(cadena); i++){
+				if((cadena[0]>=65 && cadena<=90)||(cadena[0]>=97 && cadena<=122)|| (cadena==32)){
+					contador++;
+				}
+			}
+			// cambio de minusculas a mayusculas
+			if(strlen(cadena)==contador){
+				cadena[0]=cadena[0]+32;
+				for(int i =1;i<strlen(cadena);i++){
+					if(cadena[i]==32){//lee donde estan los espacios
+						mayusculas= i+1;
+					}
+					if(i=mayusculas && cadena[i]!=32){//concierte las mayusculas en minusculas
+						cadena[i]=cadena[i]+32;
+					}
+				}
+				return =0;
+				// si la cadena contiene caracteres raros se devuelve un 1
+			}else{
+				printf("%s\n","Nose aceptan caraceres raros en las cadenas. Por favor vuelva a introducirlo." );
+				return 1;
+			}
+
+		}else{
+			return 1;
+			printf("%s\n","La cadena no puede empezar con un caracter considerado raro o con un espacio." );
+			printf("%s\n","Se admiten solo [a-z] y [A-Z]." );
+		}
+	}else{
+		return 1;
+	}
+}
