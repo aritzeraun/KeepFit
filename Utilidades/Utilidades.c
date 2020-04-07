@@ -49,6 +49,8 @@ int comprobacionTLF(int TLF){
 		return 1;
 	}
 }
+
+
 int comprobacionIBAN(char* IBAN){
 	short int tipo= 0;
 	short int contador = 0;
@@ -82,16 +84,18 @@ int comprobacionIBAN(char* IBAN){
 		printf("%s\n","El IBAN introducido tiene una logitud indeseada. Recuerda que el IBAN puede tener 20 o 24 caracteres." );
 	}
 }
+
+
 // comprueba que la cadena no tenga caracteres 'raros' y pone en mayusculas el primer caracter de cada palabra
 int ponerMayusculas(char * cadena){
 	int mayuscula = 0;
 	int contador = 0;
 
 	if(strlen(cadena)>3){
-		if((cadena[0]>=65 && cadena<=90)||(cadena[0]>=97 && cadena<=122)){
+		if((cadena[0]>=65 && cadena[0]<=90)||(cadena[0]>=97 && cadena[0]<=122)){
 			contador++;
 			for(int i =1;i<strlen(cadena); i++){
-				if((cadena[0]>=65 && cadena<=90)||(cadena[0]>=97 && cadena<=122)|| (cadena==32)){
+				if((cadena[i]>=65 && cadena[i]<=90)||(cadena[i]>=97 && cadena[i]<=122)|| (cadena[i]==32)){
 					contador++;
 				}
 			}
@@ -100,13 +104,13 @@ int ponerMayusculas(char * cadena){
 				cadena[0]=cadena[0]+32;
 				for(int i =1;i<strlen(cadena);i++){
 					if(cadena[i]==32){//lee donde estan los espacios
-						mayusculas= i+1;
+						mayuscula= i+1;
 					}
-					if(i=mayusculas && cadena[i]!=32){//concierte las mayusculas en minusculas
+					if(i==mayuscula && cadena[i]!=32){//concierte las mayusculas en minusculas
 						cadena[i]=cadena[i]+32;
 					}
 				}
-				return =0;
+				return 0;
 				// si la cadena contiene caracteres raros se devuelve un 1
 			}else{
 				printf("%s\n","Nose aceptan caraceres raros en las cadenas. Por favor vuelva a introducirlo." );
@@ -121,4 +125,72 @@ int ponerMayusculas(char * cadena){
 	}else{
 		return 1;
 	}
+}
+
+
+int comprobacionEmail(char *email){
+	int posicionArroba= 0;
+	int posicionPunto= 0;
+
+	if(strlen(email)>=6){
+		// el primer caracter de un email solo puede pertenecer a estos subconjuntos de caracteres:
+		//  [a-z], [A-Z] y [0-9]
+		// Comprovacion de usuario
+		if((email[0]>=65 && email[0]<=90)||(email[0]>=97 && email[0]<=122)|| (email[0]>=48 && email[0]<=57)){
+			for(int i=1;i<(strlen(email)-4);i++){ //minimo para tener el formato deseado
+				if((email[i]>=65 && email[i]<=90)||(email[i]>=97 && email[i]<=122)|| (email[i]>=48 && email[i]<=57)){
+
+				}else if (email[i]== 64){
+					posicionArroba = i;
+				}else{
+					printf("%s\n", "El email introducido contiene caracteres raros. Solo se se admiten los siguentes:" );
+					printf("%s\n","[a-z], [A-Z] y [0-9]" );
+					return 1;
+				}
+			}
+			if(posicionArroba != 0){
+				// comprovacion de dominio 'real'
+				for (int i=posicionArroba+1;i<(strlen(email)-4);i++) // el menos dos es debido a la raiz de las direcciones
+				{  //  [a-z], [A-Z] y [0-9]    por ejemplo se admite el email 123@123.com
+					if((email[i]>=65 && email[i]<=90)||(email[i]>=97 && email[i]<=122)|| (email[i]>=48 && email[i]<=57)){
+
+					}else if (email[i]== 46){
+						posicionPunto = i;
+					}else{
+						printf("%s\n", "El email introducido contiene caracteres raros. Solo se se admiten los siguentes:" );
+						printf("%s\n","[a-z], [A-Z] y [0-9]" );
+						return 1;
+					}
+				}
+				if (posicionPunto != 0){
+					for (int i=posicionPunto+1;i<strlen(email);i++){
+						if(strlen(email)-(posicionPunto+1)<=3){
+							// La raiz solo contiene caracteres en minusculas
+							if((email[i]>=97 && email[i]<=122)){
+							}else{
+								printf("%s\n", "La raiz contiene caracteres raros. Solo se se admiten los siguentes: [a-z]" );
+								return 1;						}
+						}else{
+							printf("%s\n", "No se apcentan raices (.es; .eus; .org ...) de más de tres caracteres.");
+						}
+					}
+				}else{
+					printf("%s\n", "El email introducido debe incluir un punto entre el dominio y la raiz. Formato: a@a.eus" );
+					return 1;
+				}
+			}else{
+				printf("%s\n", "El email introducido debe incluir un arroba. Formato: a@a.eus" );
+				return 1;
+			}
+
+		}else{
+			printf("%s\n", "El email introducido no tiene el formato deseado. Formato: a@a.eus" );
+			return 1;
+		}
+
+	}else{
+		printf("%s\n","El email introducido no tiene ni la longitud ni el formato necesario por un email. " );
+		return 1;
+	}
+
 }
