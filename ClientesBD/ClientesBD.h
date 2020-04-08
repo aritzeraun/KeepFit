@@ -11,8 +11,7 @@ typedef struct{
 }Clientes;
 void reguistrarCliente(Clientes nuevo_cli);
 void crearTablaClientes();
-void eliminacionCliente(Clientes newCli);
-Clientes* seleccionClientes(Clientes arrayLectura[]);
-int charToNumber(char *cadena);
+void eliminacionCliente(char *DNI);
+void seleccionClientes(Clientes arrayLectura[]);
 int larguraStatment();
 #endif

@@ -57,24 +57,30 @@ int comprobacionIBAN(char* IBAN){
 	int ascii = 0;
 	if(strlen(IBAN)==20  || strlen(IBAN)==24){
 		if(strlen(IBAN)==24){
-			tipo =2;
+			tipo =4;
 			if(IBAN[0]=='E'){
-				if(IBAN[0]=='S'){
+				contador++;
+				if(IBAN[1]=='S'){
 					contador++;
+					if((IBAN[2]<=57 && IBAN[2]>=48)&&(IBAN[3]<=57 && IBAN[3]>=48)){
+						contador= contador+2;
+					}
 				}else{
 					printf("%s\n","El formato del IBAN no es el adecuado." );
+					return 1;
 				}
 			}else{
 				printf("%s\n","El formato del IBAN no es el adecuado." );
+				return 1;
 			}
 		}
-		for(int i = 0; i<(20+tipo); i++){
+		for(int i = 0; i<(21+tipo); i++){
 			ascii= IBAN[i+tipo];
 			if(ascii>=48 && ascii<58){
 					contador++;
 				}
 		}
-		if(contador== 20 || contador==23){
+		if(contador== 20 || contador==24){
 			return 0;
 		}else{
 			printf("%s\n","El IBAN se compone de 20 digitos numericos o 'ES' y 22 digitos numericos." );
@@ -82,6 +88,7 @@ int comprobacionIBAN(char* IBAN){
 		}
 	}else{
 		printf("%s\n","El IBAN introducido tiene una logitud indeseada. Recuerda que el IBAN puede tener 20 o 24 caracteres." );
+		return 1;
 	}
 }
 
@@ -91,7 +98,7 @@ int ponerMayusculas(char * cadena){
 	int mayuscula = 0;
 	int contador = 0;
 
-	if(strlen(cadena)>3){
+	if(strlen(cadena)>2){
 		if((cadena[0]>=65 && cadena[0]<=90)||(cadena[0]>=97 && cadena[0]<=122)){
 			contador++;
 			for(int i =1;i<strlen(cadena); i++){
@@ -100,7 +107,7 @@ int ponerMayusculas(char * cadena){
 				}
 			}
 			// cambio de minusculas a mayusculas
-			if(strlen(cadena)==contador){
+			if(strlen(cadena)==contador+1){
 				cadena[0]=cadena[0]+32;
 				for(int i =1;i<strlen(cadena);i++){
 					if(cadena[i]==32){//lee donde estan los espacios
@@ -150,7 +157,7 @@ int comprobacionEmail(char *email){
 			}
 			if(posicionArroba != 0){
 				// comprovacion de dominio 'real'
-				for (int i=posicionArroba+1;i<(strlen(email)-4);i++) // el menos dos es debido a la raiz de las direcciones
+				for (int i=posicionArroba+1;i<(strlen(email)-2);i++) // el menos dos es debido a la raiz de las direcciones
 				{  //  [a-z], [A-Z] y [0-9]    por ejemplo se admite el email 123@123.com
 					if((email[i]>=65 && email[i]<=90)||(email[i]>=97 && email[i]<=122)|| (email[i]>=48 && email[i]<=57)){
 
@@ -166,8 +173,12 @@ int comprobacionEmail(char *email){
 					for (int i=posicionPunto+1;i<strlen(email);i++){
 						if(strlen(email)-(posicionPunto+1)<=3){
 							// La raiz solo contiene caracteres en minusculas
-							if((email[i]>=97 && email[i]<=122)){
+							if(email[i]>=97 && email[i]<=122){
+								if((i+1)==strlen(email)){
+									return 0;
+								}
 							}else{
+								printf("%s\n",email[i] );
 								printf("%s\n", "La raiz contiene caracteres raros. Solo se se admiten los siguentes: [a-z]" );
 								return 1;						}
 						}else{

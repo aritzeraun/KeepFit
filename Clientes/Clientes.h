@@ -1,6 +1,9 @@
+#include "../ClientesBD/ClientesBD.h"
 #ifndef _CLIENTES_H
 #define _CLIENTES_H
-void introducirCliente();
+void introducirOmodificarCliente(int tipo);
 int repetido(char *cadena, int tipo);
-void  mostrarClientes();
+int mostrarClientes(Clientes* arrayClientes);
+void borrarClientes();
+void liberarMemoria(Clientes* arrayClientes, int dimension);
 #endif

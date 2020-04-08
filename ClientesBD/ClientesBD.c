@@ -39,11 +39,11 @@ void reguistrarCliente(Clientes newCli){
    sqlite3_close(db);
 }
 
-void eliminacionCliente(Clientes newCli){
+void eliminacionCliente(char *DNI){
       sqlite3 *db = conexion();
       char *mensageError;
       char *sql ;
-      sprintf(sql,"DELETE FROM Clientes WHERE DNI ='%s';", newCli.DNI);
+      sprintf(sql,"DELETE FROM Clientes WHERE DNI ='%s';",DNI);
       int e = sqlite3_exec(db,sql,0,0,&mensageError);
       if (e != SQLITE_OK ) {
            fprintf(stderr, "SQL error: %s\n", mensageError);
@@ -62,39 +62,31 @@ void eliminacionCliente(Clientes newCli){
       sqlite3_close(db);
       return length;
  }
-int charToNumber(char * cadena){
-   int number=0;
-   for(int i=0;i<strlen(cadena);i++){
-      number = number *10 + cadena[i]-48;
-   }
-   return number;
-}
 
-Clientes* seleccionClientes(Clientes arrayLectura[]){
+void seleccionClientes(Clientes arrayLectura[]){
       sqlite3 *db = conexion();
-      char *tlf;
+      int tlf;
       sqlite3_stmt *stmt;
       int i =0;  
       sqlite3_prepare_v2(db,"SELECT * FROM Clientes;", -1, &stmt, NULL);
 
       while (sqlite3_step(stmt) != SQLITE_DONE) {
-         arrayLectura[i].DNI =(char*)malloc(strlen((char*) sqlite3_column_text(stmt, 0))*sizeof(char));
+        arrayLectura[i].DNI =(char*)malloc((strlen((char*) sqlite3_column_text(stmt, 0))+1)*sizeof(char));
          strcpy((arrayLectura[i]).DNI,(char*) sqlite3_column_text(stmt, 0));
-         arrayLectura[i].nombre =(char*)malloc(strlen((char*) sqlite3_column_text(stmt, 1))*sizeof(char));
+         arrayLectura[i].nombre =(char*)malloc((strlen((char*) sqlite3_column_text(stmt, 1))+1)*sizeof(char));
          strcpy((arrayLectura[i]).nombre,(char*) sqlite3_column_text(stmt, 1));
-         arrayLectura[i].apellido =(char*)malloc(strlen((char*) sqlite3_column_text(stmt,2))*sizeof(char));
+         arrayLectura[i].apellido =(char*)malloc((strlen((char*) sqlite3_column_text(stmt,2))+1)*sizeof(char));
          strcpy((arrayLectura[i]).apellido,(char*) sqlite3_column_text(stmt, 2));
-         arrayLectura[i].direccion =(char*)malloc(strlen((char*) sqlite3_column_text(stmt, 3))*sizeof(char));
+         arrayLectura[i].direccion =(char*)malloc((strlen((char*) sqlite3_column_text(stmt, 3))+1)*sizeof(char));
          strcpy((arrayLectura[i]).direccion,(char*) sqlite3_column_text(stmt, 3));
-         tlf= (char *) sqlite3_column_text(stmt, 4);
+         tlf= (int) sqlite3_column_int(stmt, 4);
          arrayLectura[i].tlf =(int) malloc(1*sizeof(int));
-          arrayLectura[i].tlf = charToNumber(tlf);
-         arrayLectura[i].n_cta =(char*)malloc(strlen((char*) sqlite3_column_text(stmt, 5))*sizeof(char));
+          arrayLectura[i].tlf = tlf;
+         arrayLectura[i].n_cta =(char*)malloc((strlen((char*) sqlite3_column_text(stmt, 5))+1)*sizeof(char));
          strcpy((arrayLectura[i]).n_cta,(char*) sqlite3_column_text(stmt, 5));
-          arrayLectura[i].email =(char*)malloc(strlen((char*) sqlite3_column_text(stmt, 6))*sizeof(char));
+          arrayLectura[i].email =(char*)malloc((strlen((char*) sqlite3_column_text(stmt, 6))+1)*sizeof(char));
          strcpy((arrayLectura[i]).email,(char*) sqlite3_column_text(stmt, 6));
          i++;
       }
       sqlite3_close(db);
-        return arrayLectura;
 }

@@ -29,7 +29,7 @@ int main(void){
 		 crearTablaClientes();
 		switch (opcion){
 			case 1:
-			introducirCliente();	
+			menuClientes();	
 			break;
 			case 2:
 			break;
@@ -55,26 +55,32 @@ void imprimirOpciones(char * objeto){
 		printf("%s %s.\n","4. Modificar", objeto);
 		printf("%s %s.\n","5. Salir del apartado", objeto);
 }
-
 void menuClientes(){
 	short int opcion =0;
 	while (opcion !=5){
 		imprimirOpciones("Cliente");
 		scanf("%i", &opcion);
 		fflush(stdin);
-
+		Clientes *arrayClientes;
+		int dimension = 0;
 		switch (opcion){
 			case 1:
-				introducirCliente();	
+			// Como se tratade crear un nuevo Cliente, el tipo sera 0.
+				introducirOmodificarCliente(0);	
 			break;
 			case 2:
-				mostrarClientes();
+				dimension = mostrarClientes(arrayClientes);
 			break;
 			case 3:
+				dimension = mostrarClientes(arrayClientes);
+				borrarClientes();
 			break;
 			case 4:
+				// Como se tratade crear un nuevo Cliente, el tipo sera 0.
+				introducirOmodificarCliente(1);	
 			break;
 			case 5:
+			// Se define caso 5 para que no se imprima el mensage  del default cuando se desee salir de este menu.
 			break;
 			default: printf("%s\n","Porfavor, introduzca una opcion valida." );
 		}
