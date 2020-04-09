@@ -106,6 +106,9 @@ int ponerMayusculas(char * cadena){
 			for(int i =1;i<strlen(cadena); i++){
 				if((cadena[i]>=65 && cadena[i]<=90)||(cadena[i]>=97 && cadena[i]<=122)|| (cadena[i]==32)){
 					contador++;
+					if((cadena[i]>=65 && cadena[i]<=90)){
+						cadena[i] = cadena[i] +32;
+					}
 				}
 			}
 			// cambio de minusculas a mayusculas
@@ -118,8 +121,8 @@ int ponerMayusculas(char * cadena){
 						mayuscula= i+1;
 					}
 					if(i==mayuscula && cadena[i]!=32){//convierte las mayusculas en minusculas
-						if((cadena[0]>=97 && cadena[0]<=122)){
-							cadena[0]=cadena[0]-32;
+						if((cadena[i]>=97 && cadena[i]<=122)){
+							cadena[i]=cadena[i]-32;
 						}
 					}
 				}

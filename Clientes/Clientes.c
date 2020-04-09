@@ -24,13 +24,16 @@ void introducirOmodificarCliente(int tipo){
 	char email[LIMITE_EMAIL +1];
 
 	Clientes *arrayClientes;
+	int dimension = larguraStatment();
+	arrayClientes = (Clientes*) malloc (dimension *sizeof(Clientes));
+	seleccionClientes(arrayClientes);
 	int posOld= 0;
 	// La variable existe, ademas de verificar que el dato introducido ya existe, tambien nos dice a cual de lo objetos pertnece (nos da su posicion)
 	int existe = 0; //Cuando el valor introducido no exista su valor sera -1
 	if (tipo ==1){
 		mostrarClientes(arrayClientes);
 		do{
-			printf("%s\n","	\nIntroduzca el DNI:" );
+			printf("%s\n","	Introduzca el DNI:" );
 			fgets(DNIviejo,LIMITE_DNI+1,stdin);
 			fflush(stdin);
 			verificar =comprobacionDNI(DNIviejo);
@@ -110,7 +113,7 @@ void introducirOmodificarCliente(int tipo){
 	// telefono
 	do{
 		if(tipo==1){
-				printf("El TELEFONO cliente que desea modificar es: %s \n", arrayClientes[posOld].tlf);
+				printf("El TELEFONO cliente que desea modificar es: %i \n", arrayClientes[posOld].tlf);
 				printf("%s\n","En el caso de que no desee modificarlo introduzca   '0' \n");
 		}
 		printf("%s\n","	Introduzca el NUMERO DE TELEFONO:" );
@@ -178,6 +181,7 @@ void introducirOmodificarCliente(int tipo){
 		Clientes nuevoCliente ={DNI, nombre, apellido, direccion,TLF,n_cta, email};
 		reguistrarCliente(nuevoCliente);
 	}	
+	liberarMemoria(arrayClientes,dimension);
 }
 
 int repetido(char *cadena, int tipo){
@@ -210,8 +214,10 @@ int repetido(char *cadena, int tipo){
 	if (cmp != 0){
 		return -1;
 	}
+	liberarMemoria(arrayClientes,dimension);
 }
-int mostrarClientes(Clientes* arrayClientes){
+void mostrarClientes(){
+	Clientes* arrayClientes;
 	int dimension = larguraStatment();
 	arrayClientes = (Clientes*) malloc (dimension *sizeof(Clientes));
 	seleccionClientes(arrayClientes);
@@ -225,10 +231,10 @@ int mostrarClientes(Clientes* arrayClientes){
 		printf("   CUENTA BANCARIA: %s\n",arrayClientes[i].n_cta);
 		printf("   EMAIL: %s\n\n",arrayClientes[i].email);
 	}
-	return dimension;
+	liberarMemoria(arrayClientes,dimension);
 }
 void borrarClientes(){
-	int existe;
+	int existe = 0;
 	int verificar;
 	int LIMITE_DNI = 9;
 	char DNI[LIMITE_DNI+1];
@@ -236,38 +242,32 @@ void borrarClientes(){
 		printf("%s\n","	Introduzca el DNI:" );
 		fgets(DNI,LIMITE_DNI+1,stdin);
 		fflush(stdin);
+		verificar =comprobacionDNI(DNI);
 		existe= repetido(DNI, 1);
 		if(existe == -1){
 			printf("%s\n","El DNI introducido NO esta reguistrado en la Base de Datos. Vuelve a introducir otro." );
 		}
-		verificar =comprobacionDNI(DNI);
-	}while(!(verificar == 0 && existe != -1));
-
+	}while(verificar == 1 || existe == -1);
 	eliminacionCliente(DNI);
 	printf("\n %s\n\n","La eliminacion se ha efectuado correrctamente." );
 
 }
 void liberarMemoria(Clientes* arrayClientes, int dimension){
 	for(int i = 0; i<dimension; i++){
-		printf("%i\n", 1);
 		free(arrayClientes[i].DNI);
 		arrayClientes[i].DNI = NULL;
-		printf("%i\n", 188);
 		free(arrayClientes[i].nombre);
-		arrayClientes[i].nombre = NULL;
-			printf("%i\n", 2);		
+		arrayClientes[i].nombre = NULL;		
 		free(arrayClientes[i].apellido);
 		arrayClientes[i].apellido = NULL;
-			printf("%i\n", 3);
 		free(arrayClientes[i].direccion);
 		arrayClientes[i].direccion = NULL;
-			printf("%i\n", 4);
 		free(arrayClientes[i].n_cta);
 		arrayClientes[i].n_cta = NULL;
-			printf("%i\n", 5);
 		free(arrayClientes[i].email);
 		arrayClientes[i].email = NULL;
-	free(arrayClientes);
-	arrayClientes== NULL;
+
+		free(arrayClientes);
+		arrayClientes== NULL;
 	}
 }

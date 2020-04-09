@@ -22,7 +22,7 @@ void crearTablaClientes(){
       "apellido varchar(30)  not null,"
       "direccion varchar(50),"
       "tlf integer not null,"
-      "n_cta varchar(20)"
+      "n_cta varchar(20),"
      " email varchar(50));" ,0,0,&mensageError); 
 
    if(e){
@@ -32,7 +32,6 @@ void crearTablaClientes(){
 }
 void reguistrarCliente(Clientes newCli){
 	   sqlite3 *db = conexion();
-      char *mensageError;
        char* sql="INSERT INTO Clientes VALUES(?,?,?,?,?,?,?);";
        sqlite3_stmt *stmt;
        sqlite3_prepare_v2(db,sql,-1,&stmt,0);
@@ -50,13 +49,11 @@ void reguistrarCliente(Clientes newCli){
 
 void eliminacionCliente(char *DNI){
       sqlite3 *db = conexion();
-      char *mensageError;
-      char *sql ;
-      sprintf(sql,"DELETE FROM Clientes WHERE DNI ='%s';",DNI);
-      int e = sqlite3_exec(db,sql,0,0,&mensageError);
-      if (e != SQLITE_OK ) {
-           fprintf(stderr, "SQL error: %s\n", mensageError);
-         }
+      char *sql  = "DELETE FROM Clientes WHERE DNI ='?';";
+      sqlite3_stmt *stmt;
+       sqlite3_prepare_v2(db,sql,-1,&stmt,0);
+       sqlite3_bind_text(stmt,1,DNI,strlen(DNI),SQLITE_STATIC);  
+      sqlite3_step(stmt);   
    sqlite3_close(db);
 }
  int larguraStatment(){
@@ -76,7 +73,6 @@ void seleccionClientes(Clientes arrayLectura[]){
       sqlite3 *db = conexion();
       int tlf;
       sqlite3_stmt *stmt;
-      int i =0;  
       sqlite3_prepare_v2(db,"SELECT * FROM Clientes;", -1, &stmt, NULL);
 
       while (sqlite3_step(stmt) != SQLITE_DONE) {
@@ -95,7 +91,6 @@ void seleccionClientes(Clientes arrayLectura[]){
          strcpy((arrayLectura[i]).n_cta,(char*) sqlite3_column_text(stmt, 5));
           arrayLectura[i].email =(char*)malloc((strlen((char*) sqlite3_column_text(stmt, 6))+1)*sizeof(char));
          strcpy((arrayLectura[i]).email,(char*) sqlite3_column_text(stmt, 6));
-         i++;
       }
       sqlite3_close(db);
 }

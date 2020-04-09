@@ -2,9 +2,11 @@
 #include <stdlib.h>
 #include "Clientes/Clientes.h"
 #include "ClientesBD/ClientesBD.h"
+#include "EmpleadosBD/EmpleadosBD.h"
 
 void imprimirOpciones(char * objeto);
 void menuClientes();
+void menuEmpleados();
 
 // De momemnto, no se preve que el programa vaya a recibir parametros externos.
 // Cuando realicemos el siguiente ptrograma en C++  esto podra variar.
@@ -24,18 +26,20 @@ int main(void){
 		printf("%s\n","5. Salir del programa." );
 		scanf("%i", &opcion);
 		fflush(stdin);
-
 		// Creacion de tablas de los distintos modulos.
 		 crearTablaClientes();
 		switch (opcion){
 			case 1:
-			menuClientes();	
+				menu(1);	
 			break;
 			case 2:
+				menu(2);
 			break;
 			case 3:
+				menu(3);
 			break;
 			case 4:
+				menu(4);
 			break;
 			case 5:
 				printf("%s\n", "Gracias por haber confiado en los servicios de KeepFit. Hasta Pronto." );
@@ -55,32 +59,61 @@ void imprimirOpciones(char * objeto){
 		printf("%s %s.\n","4. Modificar", objeto);
 		printf("%s %s.\n","5. Salir del apartado", objeto);
 }
-void menuClientes(){
+void menu(in tipo){
 	short int opcion =0;
 	while (opcion !=5){
-		imprimirOpciones("Cliente");
+		char tipoObjeto ={"Cliente","Empleado","Curso","Reservas"}
+		imprimirOpciones(tipoObjeto[tipo-1]);
 		scanf("%i", &opcion);
 		fflush(stdin);
-		Clientes *arrayClientes;
-		int dimension = 0;
+		
 		switch (opcion){
 			case 1:
-			// Como se tratade crear un nuevo Cliente, el tipo sera 0.
-				introducirOmodificarCliente(0);	
+				if (tipo==1){
+					introducirOmodificarCliente(0);	  // Como se trata de crear un nuevo Cliente, el tipo sera 0.
+				}else if (tipo ==2){
+
+				}else if(tipo == 3) {
+
+				}else{
+
+				}
 			break;
 			case 2:
-				dimension = mostrarClientes(arrayClientes);
+				if (tipo==1){
+					mostrarClientes();
+				}else if (tipo ==2){
+
+				}else if(tipo == 3) {
+
+				}else{
+
+				}
 			break;
 			case 3:
-				dimension = mostrarClientes(arrayClientes);
-				borrarClientes();
+				if (tipo==1){
+					mostrarClientes();
+					borrarClientes();
+				}else if (tipo ==2){
+
+				}else if(tipo == 3) {
+
+				}else{
+
+				}
 			break;
 			case 4:
-				// Como se tratade crear un nuevo Cliente, el tipo sera 0.
-				introducirOmodificarCliente(1);	
+				if (tipo==1){
+				introducirOmodificarCliente(1);	// Como se trata de modificar un cliente ya existente, el tipo sera 1.
+				}else if (tipo ==2){
+
+				}else if(tipo == 3) {
+
+				}else{
+
+				}
 			break;
-			case 5:
-			// Se define caso 5 para que no se imprima el mensage  del default cuando se desee salir de este menu.
+			case 5:// Se define caso 5 para que no se imprima el mensage  del default cuando se desee salir de este menu.
 			break;
 			default: printf("%s\n","Porfavor, introduzca una opcion valida." );
 		}

@@ -3,7 +3,7 @@
 #define _CLIENTES_H
 void introducirOmodificarCliente(int tipo);
 int repetido(char *cadena, int tipo);
-int mostrarClientes(Clientes* arrayClientes);
+void mostrarClientes();
 void borrarClientes();
 void liberarMemoria(Clientes* arrayClientes, int dimension);
 #endif
