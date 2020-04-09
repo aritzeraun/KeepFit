@@ -22,6 +22,7 @@ void introducirOmodificarCliente(int tipo){
 	int TLF = 0;
 	char n_cta[LIMITE_CTA +1];
 	char email[LIMITE_EMAIL +1];
+
 	Clientes *arrayClientes;
 	int posOld= 0;
 	// La variable existe, ademas de verificar que el dato introducido ya existe, tambien nos dice a cual de lo objetos pertnece (nos da su posicion)
@@ -32,15 +33,17 @@ void introducirOmodificarCliente(int tipo){
 			printf("%s\n","	\nIntroduzca el DNI:" );
 			fgets(DNIviejo,LIMITE_DNI+1,stdin);
 			fflush(stdin);
+			verificar =comprobacionDNI(DNIviejo);
 			existe= repetido(DNIviejo, 1);
-			if(existe == 0){
+			if(existe == -1){
 				printf("%s\n","El DNI introducido NO esta reguistrado en la Base de Datos. Vuelve a introducir otro." );
 			}
-			verificar =comprobacionDNI(DNIviejo);
 		}while(verificar != 0 && existe != -1);
 	}
+	
 	posOld = existe;
-
+	existe = -1;
+	// introduccion y modificacion de DNI
 	do{
 		if(existe != -1){
 			printf("%s\n","El DNI introducido ya ha sido reguistrado  por otro usuario. Vuelve a introducir otro." );
@@ -52,12 +55,14 @@ void introducirOmodificarCliente(int tipo){
 		printf("%s\n","	Introduzca el DNI:" );
 		fgets(DNI,LIMITE_DNI+1,stdin);
 		fflush(stdin);
+		strtok(DNI, "\n");
 		if (!(tipo== 1 && strlen(DNI) == 1 && DNI[0] == '*')){
 			existe= repetido(DNI, 1);
 			verificar =comprobacionDNI(DNI);
 		}
-	}while((verificar != 0 && existe == -1)||(tipo== 1 && strlen(DNI) == 1 && DNI[0] == '*'));
-
+	}while((verificar != 0 && existe == -1) && !(tipo== 1 && strlen(DNI) == 1 && DNI[0] == 42));
+	
+	// introduccion y modificacion de NOMBRE
 	do{
 		if(tipo==1){
 				printf("El NOMBRE cliente que desea modificar es: %s \n", arrayClientes[posOld].nombre);
@@ -66,11 +71,13 @@ void introducirOmodificarCliente(int tipo){
 		printf("%s\n","	Introduzca el NOMBRE:" );
 		fgets(nombre,LIMITE_NOMBRE+1,stdin);
 		fflush(stdin);
+		strtok(nombre, "\n");
 		if (!(tipo== 1 && strlen(nombre) == 1 && nombre[0] == '*')){
 			verificar = ponerMayusculas(nombre);
 		}
-	}while((verificar!=0) || (tipo== 1 && strlen(nombre) == 1 && nombre[0] == '*'));
+	}while((verificar!=0) && !(tipo== 1 && strlen(nombre) == 1 && nombre[0] == '*'));
 
+	// Se ha decicido que solo se reguistrara el primer apellido.
 	do{
 		if(tipo==1){
 				printf("El APELLIDO cliente que desea modificar es: %s \n", arrayClientes[posOld].apellido);
@@ -79,11 +86,13 @@ void introducirOmodificarCliente(int tipo){
 		printf("%s\n","	Introduzca el APELLIDO:" );
 		fgets(apellido,LIMITE_APELLIDO+1,stdin);
 		fflush(stdin);
+		strtok(apellido, "\n");
 		if (!(tipo== 1 && strlen(apellido) == 1 && apellido[0] == '*')){
 			verificar =ponerMayusculas(apellido);
 		}	
-	}while((verificar !=0) || (tipo== 1 && strlen(apellido) == 1 && apellido[0] == '*'));
+	}while((verificar !=0) && !(tipo== 1 && strlen(apellido) == 1 && apellido[0] == '*'));
 
+	// direcion de vivienda  habitual
 	do{
 		if(tipo==1){
 				printf("El DIRECCION DE LA VIVIENDA HABITUAL cliente que desea modificar es: %s \n", arrayClientes[posOld].direccion);
@@ -92,11 +101,13 @@ void introducirOmodificarCliente(int tipo){
 		printf("%s\n","	Introduzca el DIRECCION DE LA VIVIENDA HABITUAL:" );
 		fgets(direccion,LIMITE_DIR +1,stdin);
 		fflush(stdin);
+		strtok(direccion, "\n");
 		if (!(tipo== 1 && strlen(direccion) == 1 && direccion[0] == '*')){
 			verificar =ponerMayusculas(direccion);
 		}
-	}while((verificar !=0) ||(tipo== 1 && strlen(direccion) == 1 && direccion[0] == '*'));
+	}while((verificar !=0) && !(tipo== 1 && strlen(direccion) == 1 && direccion[0] == '*'));
 
+	// telefono
 	do{
 		if(tipo==1){
 				printf("El TELEFONO cliente que desea modificar es: %s \n", arrayClientes[posOld].tlf);
@@ -108,8 +119,9 @@ void introducirOmodificarCliente(int tipo){
 		if (!(tipo== 1 && TLF == 0)){
 			verificar =comprobacionTLF(TLF);
 		}	
-	}while((verificar !=0)|| (tipo== 1 && TLF == 0)) ;
+	}while((verificar !=0) && !(tipo== 1 && TLF == 0)) ;
 
+	// numero de cuenta
 	do{
 		if(tipo==1){
 				printf("El NUMERO DE CUENTA BANCARIA cliente que desea modificar es: %s \n", arrayClientes[posOld].n_cta);
@@ -118,11 +130,13 @@ void introducirOmodificarCliente(int tipo){
 		printf("%s\n","	Introduzca el NUMERO DE CUENTA BANCARIA:" );
 		fgets(n_cta,LIMITE_CTA+1,stdin);
 		fflush(stdin);
+		strtok(n_cta, "\n");
 		if (!(tipo== 1 && strlen(n_cta) == 1 && n_cta[0] == '*')){
 			verificar =comprobacionIBAN(n_cta);
 		}		
-	}while((verificar !=0)||(tipo== 1 && strlen(n_cta) == 1 && n_cta[0] == '*'));
+	}while((verificar !=0) && !(tipo== 1 && strlen(n_cta) == 1 && n_cta[0] == '*'));
 
+	// email
 	do{
 		if(tipo==1){
 				printf("El EMAIL cliente que desea modificar es: %s \n", arrayClientes[posOld].email);
@@ -131,11 +145,12 @@ void introducirOmodificarCliente(int tipo){
 		printf("%s\n","	Introduzca el EMAIL" );
 		fgets(email,LIMITE_EMAIL+1,stdin);
 		fflush(stdin);
+		strtok(email, "\n");
 		if (!(tipo== 1 && strlen(email) == 1 && email[0] == '*')){
 			existe = repetido(email, 2);
 			verificar =comprobacionEmail(email);
 		}	
-	}while((verificar !=0 && existe == -1) ||(tipo== 1 && strlen(email) == 1 && email[0] == '*'));
+	}while((verificar !=0 && existe == -1) && !(tipo== 1 && strlen(email) == 1 && email[0] == '*'));
 
 // En el caso de la modificacion, si el usuario introduce un * se mantendra el valor, en el caso contrario, se modificara.
 	if(tipo == 1){
@@ -161,7 +176,6 @@ void introducirOmodificarCliente(int tipo){
 	
 	}else{
 		Clientes nuevoCliente ={DNI, nombre, apellido, direccion,TLF,n_cta, email};
-		printf("%s\n", "iepa");
 		reguistrarCliente(nuevoCliente);
 	}	
 }

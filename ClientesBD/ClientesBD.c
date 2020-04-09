@@ -22,8 +22,8 @@ void crearTablaClientes(){
       "apellido varchar(30)  not null,"
       "direccion varchar(50),"
       "tlf integer not null,"
-      "email varchar(50),"
-     " n_cta varchar(20));" ,0,0,&mensageError); 
+      "n_cta varchar(20)"
+     " email varchar(50));" ,0,0,&mensageError); 
 
    if(e){
       fprintf(stderr,"No se ha podido crear la tabla CLIENTES.%s\n", sqlite3_errmsg(db));
@@ -33,9 +33,18 @@ void crearTablaClientes(){
 void reguistrarCliente(Clientes newCli){
 	   sqlite3 *db = conexion();
       char *mensageError;
-      char *sql ;
-      sprintf(sql,"INSERT INTO Clientes VALUES('%s','%s','%s','%s',%i,'%s','%s');",newCli.DNI, newCli.nombre,newCli.apellido, newCli.direccion, newCli.tlf, newCli.email, newCli.n_cta);
-      int e = sqlite3_exec(db,sql,0,0,&mensageError);
+       char* sql="INSERT INTO Clientes VALUES(?,?,?,?,?,?,?);";
+       sqlite3_stmt *stmt;
+       sqlite3_prepare_v2(db,sql,-1,&stmt,0);
+       sqlite3_bind_text(stmt,1,newCli.DNI,strlen(newCli.DNI),SQLITE_STATIC);
+       sqlite3_bind_text(stmt,2,newCli.nombre,strlen(newCli.nombre),SQLITE_STATIC);
+       sqlite3_bind_text(stmt,3,newCli.apellido,strlen(newCli.apellido),SQLITE_STATIC);
+       sqlite3_bind_text(stmt,4,newCli.direccion,strlen(newCli.direccion),SQLITE_STATIC);
+       sqlite3_bind_int(stmt,5,newCli.tlf);
+       sqlite3_bind_text(stmt,6,newCli.n_cta,strlen(newCli.n_cta),SQLITE_STATIC);
+       sqlite3_bind_text(stmt,7,newCli.email,strlen(newCli.email),SQLITE_STATIC);
+       
+       sqlite3_step(stmt);    
    sqlite3_close(db);
 }
 
