@@ -8,8 +8,8 @@ typedef struct{
 	int tlf;
 	char *n_cta;
 	char *email;
-	char * n_ss;
-	float sueldo;
+	int n_ss;
+	double sueldo;
 	char *especialidad;
 	char *cargo;
 	int horario;

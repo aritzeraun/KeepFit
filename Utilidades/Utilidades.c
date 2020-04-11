@@ -211,3 +211,40 @@ int comprobacionEmail(char *email){
 		return 1;
 	}
 }
+int comprobacionN_SS(int n_ss){
+
+	if(n_ss<100000000000 || n_ss>999999999999){
+		return 1;
+	}else{
+		printf("%s\n","El numero de la seguridad social debe tener 12 digitos numericos. Vuelva introducirlo." );
+		return 1;
+	}
+
+}
+int comprobacionSueldo(double sueldo){
+	if (sueldo<1187.49){
+		printf("%s\n","El convenio sectorial de Euskadi establece que el sueldo minimo mensual debe ser"
+			"superior o igual a 1187.49 euros." );
+		return 1;
+	}
+	if(sueldo> 5200.75){
+		printf("%s\n","Tal y como se acordo en la junta anual de socios, los sueldos corporativos" );
+		printf("%s\n", " NO podran superar el umbral de 5200.75 euros en la compania KeepFit SL.");
+		return 1;
+	}else{
+		return 0;
+	}
+
+}
+int comprobacionHorario (char *horario){
+
+	if(strcmp(horario,"Mañanas") || strcmp(horario,"mañanas") ||strcmp(horario,"Mañana") ||strcmp(horario,"mañana")){
+		return 2;  //como el horario se guardara en la BD como un numero (para ahorrar espacio y ser mas eficiente), se ha elegido 
+		// que las mananas representaran el valor 2
+	}else if (strcmp(horario,"Tardes") || strcmp(horario,"tardes") ||strcmp(horario,"tarde") ||strcmp(horario,"Tarde")){
+		return 3; //como el horario se guardara en la BD como un numero (para ahorrar espacio y ser mas eficiente), se ha elegido 
+		// que las tardes representaran el valor 3
+	}else{
+		return 1;
+	}
+}

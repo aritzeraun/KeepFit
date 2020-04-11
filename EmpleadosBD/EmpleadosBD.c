@@ -4,7 +4,7 @@
 #include "EmpleadosBD.h"
 #include "../Sqlite3/sqlite3.h"
 
-sqlite3* conexion(){
+sqlite3* conexionE(){
    sqlite3 *db;
    int e = sqlite3_open("database.db", &db);
    if( e) {
@@ -12,8 +12,8 @@ sqlite3* conexion(){
    }
     return db;
 }
-void crearTablaClientes(){
-   sqlite3 *db = conexion();
+void crearTablaEmpleados(){
+   sqlite3 *db = conexionE();
    char *mensageError;
    int e= sqlite3_exec(db,"CREATE TABLE IF NOT EXISTS Empleados"
       "(DNI varchar(9)  primary key not null,"
@@ -34,8 +34,8 @@ void crearTablaClientes(){
    } 
    sqlite3_close(db); 
 }
-void reguistrarCliente(Empleados newEmp){
-	   sqlite3 *db = conexion();
+void reguistrarEmpleados(Empleados newEmp){
+	   sqlite3 *db = conexionE();
        char* sql="INSERT INTO Empleados VALUES(?,?,?,?,?,?,?,?,?,?,?,?);";
        sqlite3_stmt *stmt;
        sqlite3_prepare_v2(db,sql,-1,&stmt,0);
@@ -55,8 +55,8 @@ void reguistrarCliente(Empleados newEmp){
    sqlite3_close(db);
 }
 
-void eliminacionCliente(char *DNI){
-      sqlite3 *db = conexion();
+void eliminacionEmpleados(char *DNI){
+      sqlite3 *db = conexionE();
       char *sql  = "DELETE FROM Clientes WHERE DNI ='?';";
       sqlite3_stmt *stmt;
        sqlite3_prepare_v2(db,sql,-1,&stmt,0);
@@ -64,8 +64,8 @@ void eliminacionCliente(char *DNI){
       sqlite3_step(stmt);   
    sqlite3_close(db);
 }
- int larguraStatment(){
-      sqlite3 *db = conexion();
+ int larguraSentencia(){
+      sqlite3 *db = conexionE();
       sqlite3_stmt *stmt;
       int length=0;
    
@@ -77,9 +77,11 @@ void eliminacionCliente(char *DNI){
       return length;
  }
 
-void seleccionClientes(Empleados arrayLectura[]){
-      sqlite3 *db = conexion();
+void seleccionEmpleados(Empleados arrayLectura[]){
+      sqlite3 *db = conexionE();
       sqlite3_stmt *stmt; 
+      int i = 0;
+      double n_ss;
       sqlite3_prepare_v2(db,"SELECT * FROM Empleados;", -1, &stmt, NULL);
 
       while (sqlite3_step(stmt) != SQLITE_DONE) {
@@ -91,22 +93,20 @@ void seleccionClientes(Empleados arrayLectura[]){
         strcpy((arrayLectura[i]).apellido,(char*) sqlite3_column_text(stmt, 2));
         arrayLectura[i].direccion =(char*)malloc((strlen((char*) sqlite3_column_text(stmt, 3))+1)*sizeof(char));
         strcpy((arrayLectura[i]).direccion,(char*) sqlite3_column_text(stmt, 3));
-        arrayLectura[i].tlf =(int) malloc(1*sizeof(int));
         arrayLectura[i].tlf = (int) sqlite3_column_int(stmt, 4);
         arrayLectura[i].n_cta =(char*)malloc((strlen((char*) sqlite3_column_text(stmt, 5))+1)*sizeof(char));
         strcpy((arrayLectura[i]).n_cta,(char*) sqlite3_column_text(stmt, 5));
         arrayLectura[i].email =(char*)malloc((strlen((char*) sqlite3_column_text(stmt, 6))+1)*sizeof(char));
         strcpy((arrayLectura[i]).email,(char*) sqlite3_column_text(stmt, 6));
-        arrayLectura[i].n_ss =(int) malloc(1*sizeof(int));
         arrayLectura[i].n_ss= (int) sqlite3_column_int(stmt, 7);
-        arrayLectura[i].sueldo =(double) malloc(1*sizeof(double));
         arrayLectura[i].sueldo= (double) sqlite3_column_double(stmt, 8);
         arrayLectura[i].especialidad =(char*)malloc((strlen((char*) sqlite3_column_text(stmt, 9))+1)*sizeof(char));
         strcpy((arrayLectura[i]).especialidad,(char*) sqlite3_column_text(stmt, 9));
         arrayLectura[i].cargo =(char*)malloc((strlen((char*) sqlite3_column_text(stmt, 10))+1)*sizeof(char));
         strcpy((arrayLectura[i]).cargo,(char*) sqlite3_column_text(stmt, 10));
-        rrayLectura[i].horario =(int) malloc(1*sizeof(int));
+        arrayLectura[i].horario =(int) malloc(1*sizeof(int));
         arrayLectura[i].horario= (int) sqlite3_column_int(stmt, 11);
+        i++;
       }
       sqlite3_close(db);
 }

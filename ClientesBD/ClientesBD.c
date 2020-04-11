@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "ClientesBD.h"
-#include "../Clientes/Clientes.h"
+#include "../Acciones/Acciones.h"
 #include "../Sqlite3/sqlite3.h"
 
 sqlite3* conexion(){
@@ -72,6 +72,7 @@ void eliminacionCliente(char *DNI){
 void seleccionClientes(Clientes arrayLectura[]){
       sqlite3 *db = conexion();
       int tlf;
+      int i = 0;
       sqlite3_stmt *stmt;
       sqlite3_prepare_v2(db,"SELECT * FROM Clientes;", -1, &stmt, NULL);
 
@@ -91,6 +92,7 @@ void seleccionClientes(Clientes arrayLectura[]){
          strcpy((arrayLectura[i]).n_cta,(char*) sqlite3_column_text(stmt, 5));
           arrayLectura[i].email =(char*)malloc((strlen((char*) sqlite3_column_text(stmt, 6))+1)*sizeof(char));
          strcpy((arrayLectura[i]).email,(char*) sqlite3_column_text(stmt, 6));
+         i++;
       }
       sqlite3_close(db);
 }

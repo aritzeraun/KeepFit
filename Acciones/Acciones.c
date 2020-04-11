@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "Clientes.h"
+#include "Acciones.h"
 #include "../ClientesBD/ClientesBD.h"
+#include "../EmpleadosBD/EmpleadosBD.h"
 #include "../Utilidades/Utilidades.h"
-void introducirOmodificarCliente(int tipo){
+void introducirOmodificar(int tipo, int modulo){
 
 	short unsigned int verificar = 1;
 	short unsigned int LIMITE_DNI =9;
@@ -31,13 +32,13 @@ void introducirOmodificarCliente(int tipo){
 	// La variable existe, ademas de verificar que el dato introducido ya existe, tambien nos dice a cual de lo objetos pertnece (nos da su posicion)
 	int existe = 0; //Cuando el valor introducido no exista su valor sera -1
 	if (tipo ==1){
-		mostrarClientes(arrayClientes);
+		mostrar( modulo);
 		do{
 			printf("%s\n","	Introduzca el DNI:" );
 			fgets(DNIviejo,LIMITE_DNI+1,stdin);
 			fflush(stdin);
 			verificar =comprobacionDNI(DNIviejo);
-			existe= repetido(DNIviejo, 1);
+			existe= repetido(DNIviejo, 1, modulo);
 			if(existe == -1){
 				printf("%s\n","El DNI introducido NO esta reguistrado en la Base de Datos. Vuelve a introducir otro." );
 			}
@@ -60,7 +61,7 @@ void introducirOmodificarCliente(int tipo){
 		fflush(stdin);
 		strtok(DNI, "\n");
 		if (!(tipo== 1 && strlen(DNI) == 1 && DNI[0] == '*')){
-			existe= repetido(DNI, 1);
+			existe= repetido(DNI, 1, modulo);
 			verificar =comprobacionDNI(DNI);
 		}
 	}while((verificar != 0 && existe == -1) && !(tipo== 1 && strlen(DNI) == 1 && DNI[0] == 42));
@@ -150,7 +151,7 @@ void introducirOmodificarCliente(int tipo){
 		fflush(stdin);
 		strtok(email, "\n");
 		if (!(tipo== 1 && strlen(email) == 1 && email[0] == '*')){
-			existe = repetido(email, 2);
+			existe = repetido(email, 2, modulo);
 			verificar =comprobacionEmail(email);
 		}	
 	}while((verificar !=0 && existe == -1) && !(tipo== 1 && strlen(email) == 1 && email[0] == '*'));
@@ -181,10 +182,10 @@ void introducirOmodificarCliente(int tipo){
 		Clientes nuevoCliente ={DNI, nombre, apellido, direccion,TLF,n_cta, email};
 		reguistrarCliente(nuevoCliente);
 	}	
-	liberarMemoria(arrayClientes,dimension);
+	liberarMemoria(arrayClientes,dimension, modulo);
 }
 
-int repetido(char *cadena, int tipo){
+int repetido(char *cadena, int tipo, int modulo){
 	// Para reutilizar codigo, se ddefine como tipo 1 los DNIs y tipo 2 los emails.
 	Clientes *arrayClientes;
 	int dimension = larguraStatment();
@@ -214,9 +215,9 @@ int repetido(char *cadena, int tipo){
 	if (cmp != 0){
 		return -1;
 	}
-	liberarMemoria(arrayClientes,dimension);
+	liberarMemoria(arrayClientes,dimension, modulo);
 }
-void mostrarClientes(){
+void mostrar( int modulo){
 	Clientes* arrayClientes;
 	int dimension = larguraStatment();
 	arrayClientes = (Clientes*) malloc (dimension *sizeof(Clientes));
@@ -231,9 +232,9 @@ void mostrarClientes(){
 		printf("   CUENTA BANCARIA: %s\n",arrayClientes[i].n_cta);
 		printf("   EMAIL: %s\n\n",arrayClientes[i].email);
 	}
-	liberarMemoria(arrayClientes,dimension);
+	liberarMemoria(arrayClientes,dimension, modulo);
 }
-void borrarClientes(){
+void borrar(int modulo){
 	int existe = 0;
 	int verificar;
 	int LIMITE_DNI = 9;
@@ -243,7 +244,7 @@ void borrarClientes(){
 		fgets(DNI,LIMITE_DNI+1,stdin);
 		fflush(stdin);
 		verificar =comprobacionDNI(DNI);
-		existe= repetido(DNI, 1);
+		existe= repetido(DNI, 1, modulo);
 		if(existe == -1){
 			printf("%s\n","El DNI introducido NO esta reguistrado en la Base de Datos. Vuelve a introducir otro." );
 		}
@@ -252,7 +253,7 @@ void borrarClientes(){
 	printf("\n %s\n\n","La eliminacion se ha efectuado correrctamente." );
 
 }
-void liberarMemoria(Clientes* arrayClientes, int dimension){
+void liberarMemoria(Clientes* arrayClientes, int dimension, int modulo){
 	for(int i = 0; i<dimension; i++){
 		free(arrayClientes[i].DNI);
 		arrayClientes[i].DNI = NULL;
