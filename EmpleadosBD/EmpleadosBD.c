@@ -34,7 +34,7 @@ void crearTablaEmpleados(){
    } 
    sqlite3_close(db); 
 }
-void reguistrarEmpleados(Empleados newEmp){
+void reguistrarEmpleado(Empleados newEmp){
 	   sqlite3 *db = conexionE();
        char* sql="INSERT INTO Empleados VALUES(?,?,?,?,?,?,?,?,?,?,?,?);";
        sqlite3_stmt *stmt;

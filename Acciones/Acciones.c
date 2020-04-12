@@ -16,6 +16,7 @@ void introducirOmodificar(int tipo, int modulo){
 	short unsigned int LIMITE_EMAIL = 50;
 	short unsigned int LIMITE_ESPECIALIDAD = 30;
 	short unsigned int LIMITE_CARGO = 30;
+	short unsigned int LIMITE_HORARIO = 15;
 	// recuerdar el espacio para \0
 	char DNIviejo[LIMITE_DNI+1];
 	char DNI[LIMITE_DNI+1];
@@ -29,11 +30,23 @@ void introducirOmodificar(int tipo, int modulo){
 	double sueldo = 0.0;
 	char especialidad [LIMITE_ESPECIALIDAD+1];
 	char cargo[LIMITE_CARGO+1];
+	char horario[LIMITE_HORARIO+1];
+	int typeHoraio = 0;
 
 	Clientes *arrayClientes;
-	int dimension = larguraStatment();
-	arrayClientes = (Clientes*) malloc (dimension *sizeof(Clientes));
-	seleccionClientes(arrayClientes);
+	Empleados *arrayEmpleados;
+	int dimension = 0;
+
+	if(modulo == 0){
+		dimension = larguraStatment();
+		arrayClientes = (Clientes*) malloc (dimension *sizeof(Clientes));
+		seleccionClientes(arrayClientes);
+	}else{
+		dimension = larguraSentencia();
+		arrayEmpleados = (Empleados*) malloc (dimension *sizeof(Empleados));
+		seleccionEmpleados(arrayEmpleados);
+	}
+	
 	int posOld= 0;
 	// La variable existe, ademas de verificar que el dato introducido ya existe, tambien nos dice a cual de lo objetos pertnece (nos da su posicion)
 	int existe = 0; //Cuando el valor introducido no exista su valor sera -1
@@ -59,7 +72,6 @@ void introducirOmodificar(int tipo, int modulo){
 			printf("%s\n","El DNI introducido ya ha sido reguistrado  por otro usuario. Vuelve a introducir otro." );
 		}
 		if(tipo==1){
-				printf("El DNI que desea modificar es: %s \n", arrayClientes[posOld].DNI);
 				printf("%s\n","En el caso de que no desee modificarlo introduzca   '*'\n");
 		}
 		printf("%s\n","	Introduzca el DNI:" );
@@ -75,7 +87,6 @@ void introducirOmodificar(int tipo, int modulo){
 	// introduccion y modificacion de NOMBRE
 	do{
 		if(tipo==1){
-				printf("El NOMBRE que desea modificar es: %s \n", arrayClientes[posOld].nombre);
 				printf("%s\n","En el caso de que no desee modificarlo introduzca   '*' \n");
 		}
 		printf("%s\n","	Introduzca el NOMBRE:" );
@@ -90,7 +101,6 @@ void introducirOmodificar(int tipo, int modulo){
 	// Se ha decicido que solo se reguistrara el primer apellido.
 	do{
 		if(tipo==1){
-				printf("El APELLIDO que desea modificar es: %s \n", arrayClientes[posOld].apellido);
 				printf("%s\n","En el caso de que no desee modificarlo introduzca   '*' \n");
 		}
 		printf("%s\n","	Introduzca el APELLIDO:" );
@@ -105,7 +115,6 @@ void introducirOmodificar(int tipo, int modulo){
 	// direcion de vivienda  habitual
 	do{
 		if(tipo==1){
-				printf("El DIRECCION DE LA VIVIENDA HABITUAL que desea modificar es: %s \n", arrayClientes[posOld].direccion);
 				printf("%s\n","En el caso de que no desee modificarlo introduzca   '*' \n");
 		}
 		printf("%s\n","	Introduzca el DIRECCION DE LA VIVIENDA HABITUAL:" );
@@ -120,7 +129,6 @@ void introducirOmodificar(int tipo, int modulo){
 	// telefono
 	do{
 		if(tipo==1){
-				printf("El TELEFONO que desea modificar es: %i \n", arrayClientes[posOld].tlf);
 				printf("%s\n","En el caso de que no desee modificarlo introduzca   '0' \n");
 		}
 		printf("%s\n","	Introduzca el NUMERO DE TELEFONO:" );
@@ -128,13 +136,13 @@ void introducirOmodificar(int tipo, int modulo){
 		fflush(stdin);
 		if (!(tipo== 1 && TLF == 0)){
 			verificar =comprobacionTLF(TLF);
+			existe = repetido("",3,TLF, modulo);
 		}	
-	}while((verificar !=0) && !(tipo== 1 && TLF == 0)) ;
+	}while((verificar !=0 && existe !=-1) && !(tipo== 1 && TLF == 0)) ;
 
 	// numero de cuenta
 	do{
 		if(tipo==1){
-				printf("El NUMERO DE CUENTA BANCARIA que desea modificar es: %s \n", arrayClientes[posOld].n_cta);
 				printf("%s\n","En el caso de que no desee modificarlo introduzca   '*' \n");
 		}
 		printf("%s\n","	Introduzca el NUMERO DE CUENTA BANCARIA:" );
@@ -149,7 +157,6 @@ void introducirOmodificar(int tipo, int modulo){
 	// email
 	do{
 		if(tipo==1){
-				printf("El EMAIL  que desea modificar es: %s \n", arrayClientes[posOld].email);
 				printf("%s\n","En el caso de que no desee modificarlo introduzca   '*' \n");
 		}
 		printf("%s\n","	Introduzca el EMAIL: " );
@@ -194,7 +201,6 @@ void introducirOmodificar(int tipo, int modulo){
 		//numero de la seguridad social
 		do{
 			if(tipo==1){
-					printf("El NUMERO DE LA SEGURIDAD SOCIAL que desea modificar es: %s \n","ppppppp");
 					printf("%s\n","En el caso de que no desee modificarlo introduzca   '0' \n");
 			}
 			printf("%s\n","	Introduzca el NUMERO DE LA SEGURIDAD SOCIAL: " );
@@ -202,14 +208,13 @@ void introducirOmodificar(int tipo, int modulo){
 			fflush(stdin);
 			
 			if (!tipo== 1 && n_ss == 0){
-				existe = repetido("", 3,n_ss, modulo);
+				existe = repetido("", 4,n_ss, modulo);
 				verificar =comprobacionN_SS(n_ss);
 			}	
 		}while((verificar !=0 && existe == -1) && !(tipo== 1 && n_ss == 0));
 		//sueldo
 		do{
 			if(tipo==1){
-					printf("El SUELDO del empleado que desea modificar es: %s \n","ppppppp");
 					printf("%s\n","En el caso de que no desee modificarlo introduzca   '0.0' \n");
 			}
 			printf("%s\n","	Introduzca el SUELDO: " );
@@ -224,7 +229,6 @@ void introducirOmodificar(int tipo, int modulo){
 		// especialidad
 		do{
 			if(tipo==1){
-					printf("La ESPECIALIDAD que desea modificar es: %s \n","pppppp");
 					printf("%s\n","En el caso de que no desee modificarlo introduzca   '*' \n");
 			}
 			printf("%s\n","	Introduzca la ESPECIALIDAD: " );
@@ -234,11 +238,10 @@ void introducirOmodificar(int tipo, int modulo){
 			if (!(tipo== 1 && strlen(especialidad) == 1 && especialidad[0] == '*')){
 				verificar =ponerMayusculas(especialidad);
 			}	
-		}while((verificar !=0 && existe == -1) && !(tipo== 1 && strlen(especialidad) == 1 && especialidad[0] == '*'));
+		}while((verificar !=0) && !(tipo== 1 && strlen(especialidad) == 1 && especialidad[0] == '*'));
 		// cargo
 		do{
 			if(tipo==1){
-					printf("La CARGO que desea modificar es: %s \n", "arrayClientes[posOld].email");
 					printf("%s\n","En el caso de que no desee modificarlo introduzca   '*' \n");
 			}
 			printf("%s\n","	Introduzca la CARGO: " );
@@ -248,22 +251,58 @@ void introducirOmodificar(int tipo, int modulo){
 			if (!(tipo== 1 && strlen(cargo) == 1 && cargo[0] == '*')){
 				verificar =ponerMayusculas(cargo);
 			}	
-		}while((verificar !=0 && existe == -1) && !(tipo== 1 && strlen(cargo) == 1 && cargo[0] == '*'));
+		}while((verificar !=0) && !(tipo== 1 && strlen(cargo) == 1 && cargo[0] == '*'));
 
-		// cargo
+		
 		do{
 			if(tipo==1){
-					printf("La CARGO que desea modificar es: %s \n", "arrayClientes[posOld].email");
 					printf("%s\n","En el caso de que no desee modificarlo introduzca   '*' \n");
 			}
-			printf("%s\n","	Introduzca la CARGO: " );
-			fgets(cargo,LIMITE_CARGO+1,stdin);
+			printf("%s\n","	Introduzca la HORARIO:     ('Mañanas' o 'Tardes')" );
+			fgets(horario,LIMITE_HORARIO+1,stdin);
 			fflush(stdin);
-			strtok(email, "\n");
-			if (!(tipo== 1 && strlen(cargo) == 1 && cargo[0] == '*')){
-				verificar =ponerMayusculas(cargo);
+			strtok(horario, "\n");
+			if (!(tipo== 1 && strlen(horario) == 1 && horario[0] == '*')){
+				verificar =comprobacionHorario(horario);
+				typeHoraio =verificar;
 			}	
-		}while((verificar !=0 && existe == -1) && !(tipo== 1 && strlen(cargo) == 1 && cargo[0] == '*'));
+		}while((verificar ==1) && !(tipo== 1 && strlen(horario) == 1 && horario[0] == '*'));
+
+
+		if(tipo == 1){
+			if(DNI[0] == '*'){
+				strcpy(DNI, arrayEmpleados[posOld].DNI);
+			}if(nombre[0] == '*'){
+				strcpy(nombre, arrayEmpleados[posOld].nombre);
+			}if(apellido[0] == '*'){
+				strcpy(apellido, arrayEmpleados[posOld].apellido);
+			}if(direccion[0] == '*'){
+				strcpy(direccion, arrayEmpleados[posOld].direccion);
+			}if(TLF == 0){
+				TLF=arrayEmpleados[posOld].tlf;
+			}if(n_cta[0] == '*'){
+				strcpy(n_cta, arrayEmpleados[posOld].n_cta);
+			}if(email[0] == '*'){
+				strcpy(email, arrayEmpleados[posOld].email);
+			}if(n_ss == 0){
+				n_ss=arrayEmpleados[posOld].n_ss;
+			}if(sueldo == 0.0){
+				sueldo=arrayEmpleados[posOld].sueldo;
+			}if(especialidad[0] == '*'){
+				strcpy(especialidad, arrayEmpleados[posOld].especialidad);
+			}if(especialidad[0] == '*'){
+				strcpy(especialidad, arrayEmpleados[posOld].especialidad);
+			}if(cargo[0] == '*'){
+				strcpy(cargo, arrayEmpleados[posOld].cargo);
+			}if(horario[0] == '*'){
+				typeHoraio= arrayEmpleados[posOld].horario;
+			}
+
+			eliminacionEmpleado(DNIviejo); //Se elimina el viejo Empleado		
+		}
+			Empleados nuevoEmpleado ={DNI, nombre, apellido, direccion,TLF,n_cta, email, n_ss, sueldo, especialidad, cargo, typeHoraio};
+			reguistrarEmpleado(nuevoEmpleado);	
+		liberarMemoriaEmpleados(arrayEmpleados,dimension);
 
 	}
 }
