@@ -17,6 +17,6 @@ typedef struct{
 void reguistrarEmpleado(Empleados nuevo_emp);
 void crearTablaEmpleados();
 void eliminacionEmpleado(char *DNI);
-void seleccionEmpleado(Empleados arrayLectura[]);
+void seleccionEmpleados(Empleados arrayLectura[]);
 int larguraSentencia();
 #endif

@@ -55,7 +55,7 @@ void reguistrarEmpleados(Empleados newEmp){
    sqlite3_close(db);
 }
 
-void eliminacionEmpleados(char *DNI){
+void eliminacionEmpleado(char *DNI){
       sqlite3 *db = conexionE();
       char *sql  = "DELETE FROM Clientes WHERE DNI ='?';";
       sqlite3_stmt *stmt;

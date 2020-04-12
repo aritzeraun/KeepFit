@@ -85,9 +85,9 @@ void menu(int tipo){
 			break;
 			case 2:
 				if (tipo==1){
-					mostrar(0);// Como se trata de mostrar un Cliente, se envia  un cero como tipo de modulo.
+					mostrarClientes();
 				}else if (tipo ==2){
-					mostrar(1); // Como se trata de mostrar un Empleado, se envia  un uno como tipo de modulo.
+					mostrarEmpleados(); 
 				}else if(tipo == 3) {
 
 				}else{
@@ -96,10 +96,10 @@ void menu(int tipo){
 			break;
 			case 3:
 				if (tipo==1){
-					mostrar(0); // Como se trata de mostrar un Cliente, se envia  un cero como tipo de modulo.
+					mostrarClientes();
 					borrar(0);  //Al igual que en mostrar, al tratarse de un Cliente, se envia un cero como valor de modulo.
 				}else if (tipo ==2){
-					mostrar(1); // Como se trata de mostrar un Empleado, se envia  un uno como tipo de modulo.
+					mostrarEmpleados();
 					borrar(1);  //Al igual que en mostrar, al tratarse de un Empleado, se envia un uno como valor de modulo.
 				}else if(tipo == 3) {
 
