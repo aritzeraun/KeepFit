@@ -112,7 +112,7 @@ void menu(int tipo){
 				introducirOmodificar(1,0);	// Como se trata de modificar un cliente ya existente, el tipo sera 1. 
 				// Como se trata de un Cliente, el valor del modulo es 0.
 				}else if (tipo ==2){
-					introducirOmodificar(1,0);// Como se trata de modificar un Empleado ya existente, el tipo sera 1. 
+					introducirOmodificar(1,1);// Como se trata de modificar un Empleado ya existente, el tipo sera 1. 
 				// Como se trata de un Empleado, el valor del modulo es 1.
 				}else if(tipo == 3) {
 

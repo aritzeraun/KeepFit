@@ -8,7 +8,7 @@ typedef struct{
 	int tlf;
 	char *n_cta;
 	char *email;
-	int n_ss;
+	unsigned long long n_ss;
 	double sueldo;
 	char *especialidad;
 	char *cargo;

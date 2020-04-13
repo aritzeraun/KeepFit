@@ -46,7 +46,7 @@ void reguistrarEmpleado(Empleados newEmp){
        sqlite3_bind_int(stmt,5,newEmp.tlf);
        sqlite3_bind_text(stmt,6,newEmp.n_cta,strlen(newEmp.n_cta),SQLITE_STATIC);
        sqlite3_bind_text(stmt,7,newEmp.email,strlen(newEmp.email),SQLITE_STATIC);
-       sqlite3_bind_int(stmt,8,newEmp.n_ss);
+       sqlite3_bind_int64(stmt,8,newEmp.n_ss);
        sqlite3_bind_double(stmt,9,newEmp.sueldo);
        sqlite3_bind_text(stmt,10,newEmp.especialidad,strlen(newEmp.especialidad),SQLITE_STATIC);
        sqlite3_bind_text(stmt,11,newEmp.cargo,strlen(newEmp.cargo),SQLITE_STATIC);
@@ -57,11 +57,11 @@ void reguistrarEmpleado(Empleados newEmp){
 
 void eliminacionEmpleado(char *DNI){
       sqlite3 *db = conexionE();
-      char *sql  = "DELETE FROM Clientes WHERE DNI ='?';";
+      char *sql  = "DELETE FROM Empleados WHERE DNI=?;";
       sqlite3_stmt *stmt;
        sqlite3_prepare_v2(db,sql,-1,&stmt,0);
        sqlite3_bind_text(stmt,1,DNI,strlen(DNI),SQLITE_STATIC);  
-      sqlite3_step(stmt);   
+       sqlite3_step(stmt); 
    sqlite3_close(db);
 }
  int larguraSentencia(){
@@ -98,13 +98,12 @@ void seleccionEmpleados(Empleados arrayLectura[]){
         strcpy((arrayLectura[i]).n_cta,(char*) sqlite3_column_text(stmt, 5));
         arrayLectura[i].email =(char*)malloc((strlen((char*) sqlite3_column_text(stmt, 6))+1)*sizeof(char));
         strcpy((arrayLectura[i]).email,(char*) sqlite3_column_text(stmt, 6));
-        arrayLectura[i].n_ss= (int) sqlite3_column_int(stmt, 7);
+        arrayLectura[i].n_ss= (int) sqlite3_column_int64(stmt, 7);
         arrayLectura[i].sueldo= (double) sqlite3_column_double(stmt, 8);
         arrayLectura[i].especialidad =(char*)malloc((strlen((char*) sqlite3_column_text(stmt, 9))+1)*sizeof(char));
         strcpy((arrayLectura[i]).especialidad,(char*) sqlite3_column_text(stmt, 9));
         arrayLectura[i].cargo =(char*)malloc((strlen((char*) sqlite3_column_text(stmt, 10))+1)*sizeof(char));
         strcpy((arrayLectura[i]).cargo,(char*) sqlite3_column_text(stmt, 10));
-        arrayLectura[i].horario =(int) malloc(1*sizeof(int));
         arrayLectura[i].horario= (int) sqlite3_column_int(stmt, 11);
         i++;
       }

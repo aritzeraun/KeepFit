@@ -49,7 +49,7 @@ void reguistrarCliente(Clientes newCli){
 
 void eliminacionCliente(char *DNI){
       sqlite3 *db = conexion();
-      char *sql  = "DELETE FROM Clientes WHERE DNI ='?';";
+      char *sql  = "DELETE FROM Clientes WHERE DNI =?;";
       sqlite3_stmt *stmt;
        sqlite3_prepare_v2(db,sql,-1,&stmt,0);
        sqlite3_bind_text(stmt,1,DNI,strlen(DNI),SQLITE_STATIC);  
