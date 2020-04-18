@@ -246,4 +246,52 @@ int comprobacionHorario (char *horario){
 	}else{
 		return 1;
 	}
+} 
+int comprobacionFecha(int anyo, int mes, int dia){
+	 int limite_dia = 0; // indica los dias que tiene un mes
+	 short unsigned int bisiesto = 0;
+
+	if(anyo<1900 || anyo>2050){
+				printf("%s\n", "Solo se pueden reguistra fechas entre 2020/1/01 y /2030/12/31");
+				return 1;
+			}else{
+			
+				if(mes<1 || mes>12){
+					printf("%s\n","Recuerda, los meses son dese 1 a 12." );
+					return 1;
+				}else{
+
+					if(mes==4 || mes==6 || mes==9 || mes==11 ){
+						limite_dia=30;
+					}else if(mes==2){
+						// si el anyo es multiplo de 4 es bisiesto
+						bisiesto= anyo- (anyo/4)*4;
+						if(bisiesto ==0){
+							limite_dia=29;
+						}else{
+							limite_dia=28;
+						}
+					}else{
+						limite_dia=31;
+					}
+					
+					if(dia<1 ||dia>limite_dia){
+						printf("%s\n", "el día introducido no corresponde con el mes introducido.");
+						return 1;
+					}else{
+                      return 0; //la fecha introducida tiene el formato correcto
+					}
+				}
+			}
+}
+int comprobacionPrecio(float precio){
+	if(precio<0.0){
+		printf("%s\n","El precio de un curso o evento no puede ser negativo. En todo caso puede ser gratuito (precio 0.0 ).");
+		return 1;
+	}else if (precio>600.00){
+		printf("%s\n","El precio de un curso o evento no puede ser superior a 600 euros en nuestro centro. Por favor, vuelva a intentarlo.");
+		return 1;
+	}else{
+		return 0;
+	}
 }
