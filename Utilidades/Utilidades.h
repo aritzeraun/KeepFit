@@ -13,5 +13,5 @@ int comprobacionFecha(int anyo, int mes, int dia);
 int comprobacionMetrosCuadrados(int metrosCuadrados);
 int comprobacionCapacidad(int metrosCuadrados, int capacidad);
 int comprobacionCodCurso(int codcurso);
-int comprobacionCapacidad(int capacidad);
+int comprobacionPlazasDisp(int plazasDisp);
 #endif

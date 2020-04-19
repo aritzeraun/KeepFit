@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Acciones/Acciones.h"
+#include "Cursos/Cursos.h"
 #include "Espacios/Espacios.h"
 #include "ClientesBD/ClientesBD.h"
 #include "EmpleadosBD/EmpleadosBD.h"
+#include "CursosBD/CursosBD.h"
 #include "EspaciosBD/EspaciosBD.h"
 
 void imprimirOpciones(char * objeto);
@@ -31,6 +33,7 @@ int main(void){
 		// Creacion de tablas de los distintos modulos.
 		 crearTablaClientes();
 		 crearTablaEmpleados();
+		 crearTablaCursos();
 		 crearTablaEspacios();
 
 		switch (opcion){

@@ -1,4 +1,4 @@
-
+#include "../CursosBD/CursosBD.h"
 
 #ifndef _CURSOS_H
 #define _CURSOS_H
