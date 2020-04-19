@@ -316,3 +316,25 @@ int comprobacionCapacidad(int metrosCuadrados, int capacidad){
 		return 0;
 	}
 }
+
+int comprobacionCodCurso(int codcurso){
+	// Para usar un sistema de codigo facil de aprender solo es numerico. Se considera que no es posible tener más de 999 cursos distintos.
+
+	if (codcurso => 1000  && codcurso < 0 ){
+		printf("%s \n", "El codigo introducido debe tener un valor entre 0 y 999")
+		return 1;
+	}else{
+		return 0;
+	}
+
+}
+
+int comprobacionPlazasDisp(int plazasDisp){
+	// Para crear un evento como mínimo se necesitan tener 5 participantes y el espacio más grande nos permite tener a 20 personas a la vez.
+	if (plazasDisp => 25 && plazasDisp < 5){
+		printf("(%s)\n", "Las plazas disponibles deben ser entre 5 y 25 participantes" );
+		return 1;
+	}else{
+		return 0;
+	}
+}

@@ -39,12 +39,15 @@ void introduciromodificarcursos(int tipo){
 			scanf("%d", CODCURSOviejo);
 			fflush(stdin);
 			verificar =comprobacionCodCurso(CODCURSOviejo);
-			existe= repetido(CODCURSOviejo, 1);
+			existe= codRepetido(CODCURSOviejo, 1);
 			if(existe == -1){
 				printf("%s\n","El CODIGO del CURSO introducido NO esta reguistrado en la Base de Datos. Vuelve a introducir otro." );
 			}
 		}while(verificar != 0 && existe != -1);
 	}
+
+	posOld = existe;
+	existe = -1;
 
 	// introduccion y modificacion del CODIGO del CURSO
 		do{
@@ -59,7 +62,7 @@ void introduciromodificarcursos(int tipo){
 			fflush(stdin);
 			
 			if (!(tipo== 1 &&  codcurso[0] == '*')){
-				existe= repetido(codcurso);
+				existe= codRepetido(codcurso);
 				verificar =comprobacionCodCurso(codcurso);
 			}
 		}while((verificar != 0 && existe == -1) && !(tipo== 1  && codcurso[0] == 42));
@@ -78,7 +81,8 @@ void introduciromodificarcursos(int tipo){
 			}
 		}while((verificar!=0) && !(tipo== 1 && strlen(nombrecurso) == 1 && nombrecurso[0] == '*'));
 
-// AÑO 
+// AÑO
+	do{ 
 		do{
 			if(tipo==1){
 					printf("%s\n","En el caso de que no desee modificarlo introduzca   '0' \n");
@@ -87,10 +91,10 @@ void introduciromodificarcursos(int tipo){
 			scanf("%i",&anyo);
 			fflush(stdin);
 			if (!(tipo== 1 && anyo == 0)){
-				verificar =comprobacionANIO(anyo);
+				
 				
 			}	
-		}while((verificar !=0 ) && !(tipo== 1 && anyo == 0)) ;
+		}while(!(tipo== 1 && anyo == 0)) ;
 
 // MES 
 		do{
@@ -101,10 +105,10 @@ void introduciromodificarcursos(int tipo){
 			scanf("%i",&mes);
 			fflush(stdin);
 			if (!(tipo== 1 && mes == 0)){
-				verificar =comprobacionMES(mes);
+				
 				
 			}	
-		}while((verificar !=0 ) && !(tipo== 1 && mes == 0)) ;
+		}while(!(tipo== 1 && mes == 0)) ;
 
 // DIA 
 		do{
@@ -115,10 +119,12 @@ void introduciromodificarcursos(int tipo){
 			scanf("%i",&dia);
 			fflush(stdin);
 			if (!(tipo== 1 && dia == 0)){
-				verificar =comprobacionDIA(dia);
+				
 				
 			}	
-		}while((verificar !=0 ) && !(tipo== 1 && dia == 0)) ;
+		}while(!(tipo== 1 && dia == 0)) ;ç
+		verificar = comprobacionFecha(anyo,mes,dia);
+	}while(verificar != 0);
 
 // Plazas Disponibles
 
@@ -151,6 +157,35 @@ void introduciromodificarcursos(int tipo){
 			}
 		}while((verificar!=0) && !(tipo== 1 && strlen(monitor) == 1 && monitor[0] == '*'));
 
+		if(tipo == 1){
+				if(codcurso[0] == '*'){
+					strcpy(codcurso, arrayCursos[posOld].codcurso);
+				}if(nombrecurso[0] == '*'){
+					strcpy(nombre, arrayCursos[posOld].nombrecurso);
+				}if(anyo == 0){
+					anyo = arrayCursos[posOld].anyo;
+				}if(mes == 0){
+					mes = arrayCursos[posOld].mes;
+				}if(dia == 0){
+					dia=arrayCursos[posOld].dia;
+				}if(horas == 0){
+					horas = arrayCursos[posOld].horas;
+				}if(plazadisp == 0){
+					plazadisp = arrayCursos[posOld].plazadisp;
+				}if(monitor[0] == '*'){
+					strcpy(monitor, arrayCursos[posOld].monitor);
+				}
+				eliminacionCurso(CODCURSOviejo); //Se elimina el viejo Curso
+				// Se escribe el curso con los datos modificados
+				Cursos nuevoCurso ={codcurso, nombrecurso, anyo, mes,dia,plazadisp, monitor};
+				reguistrarCurso(nuevoCurso);
+			
+			}else{
+				Cursos nuevoCurso ={codcurso, nombrecurso, anyo, mes,dia,plazadisp, monitor};
+				reguistrarCurso(nuevoCurso);
+			}	
+			liberarMemoriaCursos(arrayCursos,dimension);
+
 
 
 }
@@ -171,4 +206,49 @@ void mostrarCursos(){
 		
 	}
 	liberarMemoria(arrayCursos,dimension);
+}
+
+void borrar(){
+	int existe = 0;
+	int verificar;
+	int LIMITE_DNI = 9;
+	char DNI[LIMITE_DNI+1];
+	int longitud=0;
+	
+	longitud = larguraStatment();
+	
+	if(longitud != 0){
+		do{
+		printf("%s\n","	Introduzca el Codigo del Curso:" );
+		scanf("%d", codcurso);
+		fflush(stdin);
+		verificar =comprobacionCodCurso(codcurso);
+		existe= codRepetido(DNI, 1,0);
+		if(existe == -1){
+			printf("%s\n","El DNI introducido NO esta reguistrado en la Base de Datos. Vuelve a introducir otro." );
+		}
+		}while(verificar == 1 || existe == -1);
+
+		
+		eliminacionCurso(codcurso);
+		
+		
+
+		printf("\n %s\n\n","La eliminacion se ha efectuado correrctamente." );
+	}else{
+		printf("%s\n","No hay ningun objeto reguistrado. Por lo tanto, no se puede efectuar la eliminacion." );
+	}
+}
+
+void liberarMemoriaCursos(Cursos* arrayCursos, int dimension){
+	for(int i = 0; i<dimension; i++){
+		free(arrayCursos[i].nombrecurso);
+		arrayCursos[i].curso = NULL;
+		free(arrayCursos[i].monitor);
+		arrayCursos[i].monitor = NULL;		
+		
+
+		free(arrayCursos);
+		arrayCursos== NULL;
+	}
 }
