@@ -24,13 +24,14 @@ int main(void){
 		printf("%s\n","1. Clientes." );
 		printf("%s\n","2. Trabajadores (Entrenadores)." );
 		printf("%s\n","3. Cursos o Eventos." );
-		printf("%s\n","4. Reservas." );
+		printf("%s\n","4. Espacios." );
 		printf("%s\n","5. Salir del programa." );
 		scanf("%i", &opcion);
 		fflush(stdin);
 		// Creacion de tablas de los distintos modulos.
 		 crearTablaClientes();
 		 crearTablaEmpleados();
+		 crearTablaEspacios();
 
 		switch (opcion){
 			case 1:
@@ -66,7 +67,7 @@ void imprimirOpciones(char * objeto){
 void menu(int tipo){
 	short int opcion =0;
 	while (opcion !=5){
-		char* tipoObjeto[] ={"Cliente","Empleado","Curso","Reservas"};
+		char* tipoObjeto[] ={"Cliente","Empleado","Curso","Espacio"};
 		imprimirOpciones(tipoObjeto[tipo-1]);
 		scanf("%i", &opcion);
 		fflush(stdin);

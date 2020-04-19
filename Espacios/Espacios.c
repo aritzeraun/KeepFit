@@ -66,7 +66,7 @@ void IMEspacios(int tipo){
 			scanf("%i", &metrosCuadrados);
 			fflush(stdin);
 			if (!(tipo== 1 && metrosCuadrados == 0)){
-
+				verificar = comprobacionMetrosCuadrados(metrosCuadrados);
 			}	
 		}while((verificar !=0) && !(tipo== 1 && metrosCuadrados == 0));
 
@@ -80,17 +80,15 @@ void IMEspacios(int tipo){
 			fflush(stdin);
 			if (!(tipo== 1 && capacidad == 0)){
 				verificar =comprobacionCapacidad(metrosCuadrados, capacidad);
-
 			}	
-		}while((verificar !=0 && existe ==-1) && !(tipo== 1 && capacidad == 0)) ;
+		}while((verificar !=0) && !(tipo== 1 && capacidad == 0)) ;
 
-
-		// direcion de vivienda  habitual
+		// descripcion
 		do{
 			if(tipo==1){
 					printf("%s\n","En el caso de que no desee modificarlo introduzca   '*' \n");
 			}
-			printf("%s\n","	Introduzca el DIRECCION DE LA VIVIENDA HABITUAL:" );
+			printf("%s\n","	Introduzca el DESCRIPCION:" );
 			fgets(descripcion,LIMITE_DESCRIPCION +1,stdin);
 			fflush(stdin);
 			strtok(descripcion, "\n");
@@ -166,7 +164,6 @@ void mostrarEspacios(){
 	}
 	liberarMemoriaEspacios(arrayEspacios,dimension);
 }
-
 void borrarEspacios(){
 	int existe = 0;
 	int codigo;
