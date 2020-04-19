@@ -1,7 +1,7 @@
 #ifndef _ESPACIOSBD_H
 #define _ESPACIOSBD_H
 typedef struct{
-	char *codigo;
+	int codigo;
 	char *nombre;
 	int metrosCuadrados;
 	int capacidad;
@@ -9,7 +9,7 @@ typedef struct{
 }Espacios;
 void reguistrarEspacio(Espacios nuevoEspacio);
 void crearTablaEspacios();
-void eliminacionEspacio(char *codigo);
+void eliminacionEspacio( int codigo);
 void seleccionEspacios(Espacios arrayLectura[]);
 int larguraEspacios();
 #endif
