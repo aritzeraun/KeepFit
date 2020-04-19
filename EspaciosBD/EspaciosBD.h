@@ -9,7 +9,7 @@ typedef struct{
 }Espacios;
 void reguistrarEspacio(Espacios nuevoEspacio);
 void crearTablaEspacios();
-void eliminacionEspacio( int codigo);
+void eliminacionEspacio(int codigo);
 void seleccionEspacios(Espacios arrayLectura[]);
 int larguraEspacios();
 #endif

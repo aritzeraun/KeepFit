@@ -295,3 +295,24 @@ int comprobacionPrecio(float precio){
 		return 0;
 	}
 }
+int comprobacionMetrosCuadrados(int metrosCuadrados){
+	if(metrosCuadrados<5){
+		printf("%s\n", "Un espacio no puede tener menos de 5 metros cuadrados para considerarse como tal. Por favor, vuelva a intenetarlo:");
+		return 1;
+	}else if (metrosCuadrados>5000){
+		printf("%s\n", "Un espacio no puede tener mas de 5000 metros cuadrados para considerarse como tal. Por favor, vuelva a intenetarlo:");
+		return 1;
+	}else{
+		return 0;
+	}
+}
+int comprobacionCapacidad(int metrosCuadrados, int capacidad){
+	// por ley, una ppersona necesita un minimo de 4 metros cuadrados para hacer deporte en un espacio. Por lo tanto, no podremos superar dicho varometro.
+	int CAPACIDAD_MAXIMA = metrosCuadrados / 4;
+	if(capacidad>CAPACIDAD_MAXIMA){
+		printf("%s\n","Por ley no se puede superar el limite de 4 metros cuadrados por persona. Por favor, reduzca la capacidad de personas:" );
+		return 1;
+	}else{
+		return 0;
+	}
+}

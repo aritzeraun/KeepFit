@@ -29,7 +29,7 @@ void IMEspacios(int tipo){
 			mostrarEspacios();
 			do{
 				printf("%s\n","	Introduzca el CODIGO del espacio:" );
-				scanf("%i", &codigo)
+				scanf("%i", &codigo);
 				fflush(stdin);
 				existe= unico(codigo, 1);
 				if(existe == -1){
@@ -63,12 +63,10 @@ void IMEspacios(int tipo){
 					printf("%s\n","En el caso de que no desee modificarlo introduzca   '0' \n");
 			}
 			printf("%s\n","	Introduzca los METROS CUADRADOS del espacio:" );
-			scanf("%i", %metrosCuadrados);
+			scanf("%i", &metrosCuadrados);
 			fflush(stdin);
 			if (!(tipo== 1 && metrosCuadrados == 0)){
 
-
-				verificar =ponerMayusculas(apellido);
 			}	
 		}while((verificar !=0) && !(tipo== 1 && metrosCuadrados == 0));
 
@@ -80,11 +78,11 @@ void IMEspacios(int tipo){
 			printf("%s\n","	Introduzca la CAPACIDAD DE PERSONAS del espacio:" );
 			scanf("%i",&capacidad);
 			fflush(stdin);
-			if (!(tipo== 1 && TLF == 0)){
-				verificar =comprobacionTLF(TLF);
-				existe = repetido("",3,TLF, modulo);
+			if (!(tipo== 1 && capacidad == 0)){
+				verificar =comprobacionCapacidad(metrosCuadrados, capacidad);
+
 			}	
-		}while((verificar !=0 && existe ==-1) && !(tipo== 1 && TLF == 0)) ;
+		}while((verificar !=0 && existe ==-1) && !(tipo== 1 && capacidad == 0)) ;
 
 
 		// direcion de vivienda  habitual
@@ -93,13 +91,13 @@ void IMEspacios(int tipo){
 					printf("%s\n","En el caso de que no desee modificarlo introduzca   '*' \n");
 			}
 			printf("%s\n","	Introduzca el DIRECCION DE LA VIVIENDA HABITUAL:" );
-			fgets(direccion,LIMITE_DIR +1,stdin);
+			fgets(descripcion,LIMITE_DESCRIPCION +1,stdin);
 			fflush(stdin);
-			strtok(direccion, "\n");
-			if (!(tipo== 1 && strlen(direccion) == 1 && direccion[0] == '*')){
-				verificar =ponerMayusculas(direccion);
+			strtok(descripcion, "\n");
+			if (!(tipo== 1 && strlen(descripcion) == 1 && descripcion[0] == '*')){
+				verificar =ponerMayusculas(descripcion);
 			}
-		}while((verificar !=0) && !(tipo== 1 && strlen(direccion) == 1 && direccion[0] == '*'));
+		}while((verificar !=0) && !(tipo== 1 && strlen(descripcion) == 1 && descripcion[0] == '*'));
 
 			// En el caso de la modificacion, si el usuario introduce un * se mantendra el valor, en el caso contrario, se modificara.
 			if(tipo == 1){
@@ -110,13 +108,13 @@ void IMEspacios(int tipo){
 					metrosCuadrados=arrayEspacios[posOld].metrosCuadrados;
 				}if(capacidad== 0){
 					capacidad=arrayEspacios[posOld].capacidad;
-				}if(direccion[0] == '*'){
-					strcpy(direccion, arrayEspacios[posOld].direccion);
+				}if(descripcion[0] == '*'){
+					strcpy(descripcion, arrayEspacios[posOld].descripcion);
 				}
-				eliminacionCliente(DNIviejo); //Se elimina el viejo Cliente		
+				eliminacionEspacio(codigo); //Se elimina el viejo Espacio	
 			}// Se escribe el cliente con los datos modificados	
 			Espacios nuevoEspacio ={codigo, nombre, metrosCuadrados, capacidad,descripcion};
-			reguistrarEspacios(nuevoCliente);	
+			reguistrarEspacio(nuevoEspacio);	
 			liberarMemoriaEspacios(arrayEspacios,dimension);
 	}else{
 		printf("%s\n","No hay Espacios reguistrados. Por lo tanto, no se pueden modificar." );
@@ -162,9 +160,9 @@ void mostrarEspacios(){
 		printf("Espacio %i:\n",(i+1));
 		printf("   CODIGO: %i\n",arrayEspacios[i].codigo);
 		printf("   NOMBRE: %s\n",arrayEspacios[i].nombre);
-		printf("   METROS CUADRADOS: %i\n",arrayEspacios[i].,metrosCuadrados);
+		printf("   METROS CUADRADOS: %i\n",arrayEspacios[i].metrosCuadrados);
 		printf("   CAPACIDAD DE PERSONAS: %i\n",arrayEspacios[i].capacidad);
-		printf("   DESCRIPCION: %s\n",arrayClientes[i].descripcion);
+		printf("   DESCRIPCION: %s\n",arrayEspacios[i].descripcion);
 	}
 	liberarMemoriaEspacios(arrayEspacios,dimension);
 }
@@ -190,7 +188,7 @@ void borrarEspacios(){
 		printf("%s\n","No hay ningun objeto reguistrado. Por lo tanto, no se puede efectuar la eliminacion." );
 	}
 }
-void liberarMemoriaspacios(Espacios* arrayEspacios, int dimension){
+void liberarMemoriaEspacios(Espacios* arrayEspacios, int dimension){
 	for(int i = 0; i<dimension; i++){
 		
 		free(arrayEspacios[i].nombre);

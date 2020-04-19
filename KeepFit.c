@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Acciones/Acciones.h"
+#include "Espacios/Espacios.h"
 #include "ClientesBD/ClientesBD.h"
 #include "EmpleadosBD/EmpleadosBD.h"
+#include "EspaciosBD/EspaciosBD.h"
 
 void imprimirOpciones(char * objeto);
 void menu();
@@ -80,7 +82,7 @@ void menu(int tipo){
 				}else if(tipo == 3) {
 
 				}else{
-
+					IMEspacios(0);
 				}
 			break;
 			case 2:
@@ -91,7 +93,7 @@ void menu(int tipo){
 				}else if(tipo == 3) {
 
 				}else{
-
+					mostrarEspacios();
 				}
 			break;
 			case 3:
@@ -104,7 +106,7 @@ void menu(int tipo){
 				}else if(tipo == 3) {
 
 				}else{
-
+					 borrarEspacios();
 				}
 			break;
 			case 4:
@@ -117,7 +119,7 @@ void menu(int tipo){
 				}else if(tipo == 3) {
 
 				}else{
-
+					IMEspacios(1);
 				}
 			break;
 			case 5:// Se define caso 5 para que no se imprima el mensage  del default cuando se desee salir de este menu.

@@ -10,4 +10,6 @@ int comprobacionSueldo(double sueldo);
 int comprobacionHorario (char *horario);
 int comprobacionPrecio(float precio);
 int comprobacionFecha(int anyo, int mes, int dia);
+int comprobacionMetrosCuadrados(int metrosCuadrados);
+int comprobacionCapacidad(int metrosCuadrados, int capacidad);
 #endif

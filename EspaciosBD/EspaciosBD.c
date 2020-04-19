@@ -4,7 +4,7 @@
 #include "EspaciosBD.h"
 #include "../Sqlite3/sqlite3.h"
 
-sqlite3* conexion(){
+sqlite3* conexionEspacios(){
    sqlite3 *db;
    int e = sqlite3_open("database.db", &db);
    if( e) {
@@ -13,7 +13,7 @@ sqlite3* conexion(){
     return db;
 }
 void crearTablaEspacios(){
-   sqlite3 *db = conexion();
+   sqlite3 *db = conexionEspacios();
    char *mensageError;
    int e= sqlite3_exec(db,"CREATE TABLE IF NOT EXISTS Espacios"
       "(codigo integer  primary key not null,"
@@ -28,7 +28,7 @@ void crearTablaEspacios(){
    sqlite3_close(db); 
 }
 void reguistrarEspacio(Espacios newEsp){
-	   sqlite3 *db = conexion();
+	   sqlite3 *db = conexionEspacios();
        char* sql="INSERT INTO Espacios VALUES(?,?,?,?,?);";
        sqlite3_stmt *stmt;
        sqlite3_prepare_v2(db,sql,-1,&stmt,0);
@@ -41,17 +41,17 @@ void reguistrarEspacio(Espacios newEsp){
    sqlite3_close(db);
 }
 
-void eliminacionEspacio(char *codigo){
-      sqlite3 *db = conexion();
+void eliminacionEspacio(int codigo){
+      sqlite3 *db = conexionEspacios();
       char *sql  = "DELETE FROM Espacios WHERE codigo =?;";
       sqlite3_stmt *stmt;
        sqlite3_prepare_v2(db,sql,-1,&stmt,0);
-       sqlite3_bind_int(stmt,1,newEsp.codigo);
+       sqlite3_bind_int(stmt,1,codigo);
       sqlite3_step(stmt);   
    sqlite3_close(db);
 }
  int larguraEspacios(){
-      sqlite3 *db = conexion();
+      sqlite3 *db = conexionEspacios();
       sqlite3_stmt *stmt;
       int length=0;
    
@@ -64,7 +64,7 @@ void eliminacionEspacio(char *codigo){
  }
 
 void seleccionEspacios(Espacios arrayLectura[]){
-      sqlite3 *db = conexion();
+      sqlite3 *db = conexionEspacios();
       int i = 0;
       sqlite3_stmt *stmt;
       sqlite3_prepare_v2(db,"SELECT * FROM Espacios;", -1, &stmt, NULL);
