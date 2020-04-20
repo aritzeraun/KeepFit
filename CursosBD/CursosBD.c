@@ -34,7 +34,7 @@ void crearTablaCursos(){
    } 
    sqlite3_close(db); 
 }
-void reguistrarCursos(Cursos newCurso){
+void reguistrarCurso(Cursos newCurso){
 	   sqlite3 *db = conexionCursos();
        char* sql="INSERT INTO Cursos VALUES(?,?,?,?,?,?,?,?,?,?,?,?);";
        sqlite3_stmt *stmt;
@@ -57,7 +57,7 @@ void reguistrarCursos(Cursos newCurso){
 
 void eliminacionCurso(int codigo){
       sqlite3 *db = conexionCursos();
-      char *sql  = "DELETE FROM Cursos WHERE DNI =?;";
+      char *sql  = "DELETE FROM Cursos WHERE codigo =?;";
       sqlite3_stmt *stmt;
        sqlite3_prepare_v2(db,sql,-1,&stmt,0);
        sqlite3_bind_int(stmt,1,codigo);

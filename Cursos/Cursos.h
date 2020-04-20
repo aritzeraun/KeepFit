@@ -1,11 +1,10 @@
 #include "../CursosBD/CursosBD.h"
-
 #ifndef _CURSOS_H
 #define _CURSOS_H
 void introduciromodificarcursos(int tipo);
-int codRepetido(char *cadena, int tipo,int datoNumerico);
+int codRepetido(int codigo);
 void mostrarCursos();
-void borrar();
+void borrarCursos();
 void liberarMemoriaCursos(Cursos* arrayCursos, int dimension);
 
 #endif

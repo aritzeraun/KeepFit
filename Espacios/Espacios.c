@@ -160,7 +160,7 @@ void mostrarEspacios(){
 		printf("   NOMBRE: %s\n",arrayEspacios[i].nombre);
 		printf("   METROS CUADRADOS: %i\n",arrayEspacios[i].metrosCuadrados);
 		printf("   CAPACIDAD DE PERSONAS: %i\n",arrayEspacios[i].capacidad);
-		printf("   DESCRIPCION: %s\n",arrayEspacios[i].descripcion);
+		printf("   DESCRIPCION: %s\n\n",arrayEspacios[i].descripcion);
 	}
 	liberarMemoriaEspacios(arrayEspacios,dimension);
 }

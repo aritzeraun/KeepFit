@@ -498,10 +498,9 @@ void liberarMemoriaClientes(Clientes* arrayClientes, int dimension){
 		arrayClientes[i].n_cta = NULL;
 		free(arrayClientes[i].email);
 		arrayClientes[i].email = NULL;
-
-		free(arrayClientes);
-		arrayClientes== NULL;
 	}
+	free(arrayClientes);
+	arrayClientes== NULL;
 }
 
 void liberarMemoriaEmpleados(Empleados* arrayEmpleados, int dimension){
@@ -522,8 +521,7 @@ void liberarMemoriaEmpleados(Empleados* arrayEmpleados, int dimension){
 		arrayEmpleados[i].especialidad = NULL;
 		free(arrayEmpleados[i].cargo);
 		arrayEmpleados[i].cargo = NULL;
-
-		free(arrayEmpleados);
-		arrayEmpleados== NULL;
 	}
+	free(arrayEmpleados);
+	arrayEmpleados== NULL;
 }
