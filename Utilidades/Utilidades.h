@@ -14,4 +14,5 @@ int comprobacionMetrosCuadrados(int metrosCuadrados);
 int comprobacionCapacidad(int metrosCuadrados, int capacidad);
 int comprobacionCodCurso(int codcurso);
 int comprobacionPlazasDisp(int plazasDisp);
+int comprobacionDiaSemana(char *diaSemana);
 #endif

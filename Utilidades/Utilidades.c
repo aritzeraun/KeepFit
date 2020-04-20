@@ -251,7 +251,7 @@ int comprobacionFecha(int anyo, int mes, int dia){
 	 int limite_dia = 0; // indica los dias que tiene un mes
 	 short unsigned int bisiesto = 0;
 
-	if(anyo<1900 || anyo>2050){
+	if(anyo<2020 || anyo>2050){
 				printf("%s\n", "Solo se pueden reguistra fechas entre 2020/1/01 y /2030/12/31");
 				return 1;
 			}else{
@@ -276,7 +276,7 @@ int comprobacionFecha(int anyo, int mes, int dia){
 					}
 					
 					if(dia<1 ||dia>limite_dia){
-						printf("%s\n", "el día introducido no corresponde con el mes introducido.");
+						printf("%s\n", "el dia introducido no corresponde con el mes introducido.");
 						return 1;
 					}else{
                       return 0; //la fecha introducida tiene el formato correcto
@@ -319,7 +319,7 @@ int comprobacionCapacidad(int metrosCuadrados, int capacidad){
 
 int comprobacionCodCurso(int codcurso){
 	// Para usar un sistema de codigo facil de aprender solo es numerico. Se considera que no es posible tener más de 999 cursos distintos.
-	if (codcurso >= 1000  && codcurso < 0 ){
+	if (codcurso >= 1000  || codcurso <= 0 ){
 		printf("%s \n", "El codigo introducido debe tener un valor entre 0 y 999");
 		return 1;
 	}else{
@@ -329,10 +329,27 @@ int comprobacionCodCurso(int codcurso){
 
 int comprobacionPlazasDisp(int plazasDisp){
 	// Para crear un evento como mínimo se necesitan tener 5 participantes y el espacio más grande nos permite tener a 20 personas a la vez.
-	if (plazasDisp >= 25 && plazasDisp < 5){
+	if (plazasDisp >= 25 || plazasDisp < 5){
 		printf("(%s)\n", "Las plazas disponibles deben ser entre 5 y 25 participantes" );
 		return 1;
 	}else{
 		return 0;
 	}
+}
+int comprobacionDiaSemana(char *diaSemana){
+	if(strcmp("Lunes",diaSemana) == 0 || strcmp("lunes",diaSemana) == 0 ){
+			return 1;
+		}else if(strcmp("Martes",diaSemana) == 0 || strcmp("martes",diaSemana) == 0 ){
+			return 2;
+		}else if(strcmp("Miercoles",diaSemana) == 0 || strcmp("miercoles",diaSemana) == 0 ){
+			return 3;
+		}else if(strcmp("Jueves",diaSemana) == 0 || strcmp("mjueves",diaSemana) == 0 ){
+			return 4;
+		}else if(strcmp("Viernes",diaSemana) == 0 || strcmp("viernes",diaSemana) == 0 ){
+			return 5;
+		}else if(strcmp("Sabado",diaSemana) == 0 || strcmp("sabado",diaSemana) == 0 ){
+			return 6;
+		}else{
+			return -1;
+		}
 }

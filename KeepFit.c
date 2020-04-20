@@ -84,7 +84,7 @@ void menu(int tipo){
 					introducirOmodificar(0,1);	  // Como se trata de crear un nuevo Empleado, el tipo sera 0.
 					// En cuanto al modulo, su valor es uno debido a que se trata de un Empleado.
 				}else if(tipo == 3) {
-
+					 introduciromodificarcursos(0);
 				}else{
 					IMEspacios(0);
 				}
@@ -95,7 +95,7 @@ void menu(int tipo){
 				}else if (tipo ==2){
 					mostrarEmpleados(); 
 				}else if(tipo == 3) {
-
+					mostrarCursos();
 				}else{
 					mostrarEspacios();
 				}
@@ -108,7 +108,7 @@ void menu(int tipo){
 					mostrarEmpleados();
 					borrar(1);  //Al igual que en mostrar, al tratarse de un Empleado, se envia un uno como valor de modulo.
 				}else if(tipo == 3) {
-
+ 					borrarCursos();
 				}else{
 					 borrarEspacios();
 				}
@@ -121,7 +121,7 @@ void menu(int tipo){
 					introducirOmodificar(1,1);// Como se trata de modificar un Empleado ya existente, el tipo sera 1. 
 				// Como se trata de un Empleado, el valor del modulo es 1.
 				}else if(tipo == 3) {
-
+					introduciromodificarcursos(1);
 				}else{
 					IMEspacios(1);
 				}
